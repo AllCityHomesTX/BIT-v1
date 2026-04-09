@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All City Homes | Property Intelligence Portal</title>
+<style>
+  :root {
+    --black: #0a0a0a;
+    --gold: #C9A84C;
+    --gold-light: #f0d58c;
+    --white: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-200: #e8e8e8;
+    --gray-400: #aaaaaa;
+    --gray-600: #666666;
+    --gray-800: #333333;
+    --red: #c0392b;
+    --red-light: #fdf0ef;
+    --orange: #e67e22;
+    --orange-light: #fef5ec;
+    --green: #27ae60;
+    --green-light: #edfaf4;
+    --blue: #2980b9;
+    --blue-light: #eef6fc;
+    --purple: #8e44ad;
+    --radius: 10px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f0f0;
+    color: var(--gray-800);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .portal-header {
+    background: var(--black);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--gold);
+  }
+  .portal-logo {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: 0.04em;
+  }
+  .portal-logo span { color: var(--gold); }
+  .portal-nav { display: flex; gap: 8px; align-items: center; }
+  .nav-badge {
+    background: var(--gold);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+  .nav-client {
+    color: var(--gray-400);
+    font-size: 13px;
+  }
+
+  /* ── PROPERTY HERO ── */
+  .property-hero {
+    background: var(--black);
+    padding: 28px 32px 0;
+    color: var(--white);
+  }
+  .hero-breadcrumb {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+  }
+  .hero-breadcrumb span { color: var(--gold); }
+  .hero-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-address {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: var(--gray-400);
+    margin-bottom: 16px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .val {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    display: block;
+  }
+  .hero-stat .lbl {
+    font-size: 11px;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .hero-price-block { text-align: right; }
+  .hero-price {
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-price-sub {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 4px;
+  }
+  .status-pill {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+  .status-active { background: #27ae60; color: white; }
+  .status-cancelled { background: #c0392b; color: white; }
+  .status-sold { background: #2980b9; color: white; }
+
+  /* ── TABS ── */
+  .tab-bar {
+    background: var(--black);
+    padding: 0 32px;
+    display: flex;
+    gap: 0;
+    border-top: 1px solid #222;
+    margin-top: 20px;
+  }
+  .tab-btn {
+    padding: 14px 22px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--gray-400);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--white); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── ALERT BANNERS ── */
+  .alert {
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .alert-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+  .alert-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .alert-body { font-size: 13px; line-height: 1.55; }
+  .alert-critical { background: var(--red-light); border-left: 4px solid var(--red); }
+  .alert-critical .alert-title { color: var(--red); }
+  .alert-warning { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .alert-warning .alert-title { color: var(--orange); }
+  .alert-info { background: var(--blue-light); border-left: 4px solid var(--blue); }
+  .alert-info .alert-title { color: var(--blue); }
+  .alert-success { background: var(--green-light); border-left: 4px solid var(--green); }
+  .alert-success .alert-title { color: var(--green); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-800);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .card-subtitle { font-size: 12px; color: var(--gray-400); }
+  .card-body { padding: 20px; }
+
+  /* ── SCORE GAUGE ── */
+  .score-section {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  .gauge-wrap { text-align: center; }
+  .gauge-svg { display: block; margin: 0 auto; }
+  .gauge-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-600);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .score-factors { display: flex; flex-direction: column; gap: 12px; }
+  .factor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .factor-label {
+    width: 200px;
+    font-size: 13px;
+    color: var(--gray-600);
+    flex-shrink: 0;
+  }
+  .factor-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .factor-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .factor-val {
+    width: 36px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+    color: var(--gray-800);
+  }
+  .score-verdict {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #fffbe8, #fff8d6);
+    border-radius: 8px;
+    border-left: 4px solid var(--gold);
+  }
+  .score-verdict-title { font-size: 13px; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+  .score-verdict-body { font-size: 13px; color: var(--gray-600); line-height: 1.55; }
+
+  /* ── PRICE TIMELINE ── */
+  .price-timeline { position: relative; }
+  .price-chart-wrapper { overflow-x: auto; padding-bottom: 8px; }
+  .price-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    height: 160px;
+    min-width: 100%;
+    padding: 0 10px;
+    position: relative;
+  }
+  .price-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 80px;
+    position: relative;
+  }
+  .price-bar {
+    width: 48px;
+    border-radius: 6px 6px 0 0;
+    transition: all 0.8s cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer;
+    position: relative;
+  }
+  .price-bar:hover { filter: brightness(1.15); }
+  .price-bar-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 6px;
+    color: var(--gray-600);
+    white-space: nowrap;
+  }
+  .price-bar-amount {
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+    color: var(--gray-800);
+    margin-bottom: 4px;
+  }
+
+  /* ── HISTORY TIMELINE ── */
+  .history-timeline { position: relative; padding-left: 28px; }
+  .history-timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--gray-200);
+  }
+  .history-entry {
+    position: relative;
+    padding: 12px 0 12px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    animation: fadeIn 0.3s ease;
+  }
+  .history-entry:last-child { border-bottom: none; }
+  .history-dot {
+    position: absolute;
+    left: -23px;
+    top: 16px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 2px var(--gray-200);
+  }
+  .history-entry-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .history-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .badge-act { background: #edfaf4; color: #27ae60; }
+  .badge-pch { background: #fef5ec; color: #e67e22; }
+  .badge-bom { background: #fdf0ef; color: #c0392b; }
+  .badge-ao { background: #f0e8f8; color: #8e44ad; }
+  .badge-can { background: #fdf0ef; color: #c0392b; }
+  .badge-sld { background: #eef6fc; color: #2980b9; }
+  .badge-new { background: #f5f5f5; color: #666; }
+  .badge-pnd { background: #f0e8f8; color: #8e44ad; }
+  .history-desc { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+  .history-date { font-size: 12px; color: var(--gray-400); }
+  .history-price {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-600);
+    margin-left: auto;
+  }
+  .history-note {
+    font-size: 12px;
+    color: var(--gray-600);
+    margin-top: 4px;
+    padding: 6px 10px;
+    background: var(--gray-100);
+    border-radius: 6px;
+    border-left: 3px solid var(--gold);
+  }
+  .history-note.red { border-left-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* ── LISTING SECTION HEADER ── */
+  .listing-section-header {
+    background: var(--black);
+    color: var(--white);
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin: 20px 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .listing-section-header .mls-num { font-size: 13px; font-weight: 700; color: var(--gold); }
+  .listing-section-header .mls-info { font-size: 12px; color: var(--gray-400); }
+
+  /* ── STATS GRID ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    border-top: 3px solid transparent;
+    text-align: center;
+  }
+  .stat-card.gold { border-top-color: var(--gold); }
+  .stat-card.red { border-top-color: var(--red); }
+  .stat-card.green { border-top-color: var(--green); }
+  .stat-card.blue { border-top-color: var(--blue); }
+  .stat-card.orange { border-top-color: var(--orange); }
+  .stat-card.purple { border-top-color: var(--purple); }
+  .stat-value {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-value.gold-text { color: var(--gold); }
+  .stat-value.red-text { color: var(--red); }
+  .stat-value.green-text { color: var(--green); }
+  .stat-value.orange-text { color: var(--orange); }
+  .stat-value.purple-text { color: var(--purple); }
+  .stat-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .stat-sub { font-size: 11px; color: var(--gray-600); margin-top: 4px; }
+
+  /* ── PROPERTY DETAILS ── */
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .detail-group { margin-bottom: 14px; }
+  .detail-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-key { color: var(--gray-600); }
+  .detail-val { font-weight: 600; color: var(--gray-800); text-align: right; max-width: 55%; }
+
+  /* ── NEGOTIATION TAB ── */
+  .nego-box {
+    background: linear-gradient(135deg, var(--black), #1a1a1a);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-lg);
+  }
+  .nego-box-title { font-size: 13px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .nego-box-body { font-size: 14px; line-height: 1.7; color: #ccc; }
+  .nego-box-body strong { color: var(--white); }
+  .nego-box-body .highlight { color: var(--gold); font-weight: 700; }
+  .nego-strategies { list-style: none; }
+  .nego-strategies li {
+    padding: 12px 16px;
+    background: var(--white);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--gray-800);
+    border-left: 4px solid var(--gold);
+    box-shadow: var(--shadow);
+    line-height: 1.55;
+  }
+  .nego-strategies li strong { color: var(--black); display: block; margin-bottom: 2px; }
+
+  /* ── FOOTER ── */
+  .portal-footer {
+    background: var(--black);
+    color: var(--gray-400);
+    text-align: center;
+    padding: 18px 32px;
+    font-size: 12px;
+    border-top: 3px solid var(--gold);
+    margin-top: 40px;
+  }
+  .portal-footer strong { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .main { padding: 16px; }
+    .property-hero { padding: 20px 16px 0; }
+    .tab-bar { padding: 0 16px; overflow-x: auto; }
+    .portal-header { padding: 0 16px; }
+    .hero-address { font-size: 20px; }
+    .hero-price { font-size: 28px; }
+    .score-section { grid-template-columns: 1fr; }
+  }
+
+  /* ── TOOLTIP ── */
+  .tooltip-wrap { position: relative; display: inline-block; }
+  .tooltip-wrap .tooltip {
+    visibility: hidden;
+    background: var(--black);
+    color: var(--white);
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .tooltip-wrap:hover .tooltip { visibility: visible; opacity: 1; }
+
+  /* ── PULSE ANIMATION ── */
+  .pulse { animation: pulse 2s infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .chip {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 12px;
+    margin-right: 4px;
+  }
+  .chip-gold { background: #fffbe8; color: #a07800; border: 1px solid #e0c84a; }
+  .chip-red { background: var(--red-light); color: var(--red); border: 1px solid #f5c6c2; }
+  .chip-green { background: var(--green-light); color: var(--green); border: 1px solid #a8e6c3; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="portal-header">
+  <div class="portal-logo">ALL CITY <span>HOMES</span></div>
+  <div class="portal-nav">
+    <span class="nav-client">Client Portal</span>
+    <span class="nav-badge">BETA DEMO</span>
+  </div>
+</header>
+
+<!-- PROPERTY HERO -->
+<div class="property-hero">
+  <div class="hero-breadcrumb">
+    Dashboard &rsaquo; <span>Property Intelligence Report</span> &rsaquo; MLS #1950303
+  </div>
+  <div class="hero-top">
+    <div>
+      <span class="status-pill status-active">● ACTIVE</span>
+      <div class="hero-address">729 W Kings Hwy</div>
+      <div class="hero-sub">San Antonio, TX 78212 &nbsp;·&nbsp; Beacon Hill &nbsp;·&nbsp; MLS #1950303</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="val">3</span><span class="lbl">Beds</span></div>
+        <div class="hero-stat"><span class="val">3</span><span class="lbl">Baths</span></div>
+        <div class="hero-stat"><span class="val">1,898</span><span class="lbl">Sq Ft</span></div>
+        <div class="hero-stat"><span class="val">1927</span><span class="lbl">Built</span></div>
+        <div class="hero-stat"><span class="val">$199.68</span><span class="lbl">/ Sq Ft</span></div>
+      </div>
+    </div>
+    <div class="hero-price-block">
+      <div class="hero-price">$379,000</div>
+      <div class="hero-price-sub">Listed 03/19/2026 &nbsp;·&nbsp; 21 DOM</div>
+      <div style="margin-top:10px;">
+        <span class="chip chip-red">⚠ 1 Failed Contract</span>
+        <span class="chip chip-gold">166 Days in 2024</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('intelligence')">🧠 Intelligence Report</button>
+    <button class="tab-btn" onclick="switchTab('pricehistory')">📉 Price History</button>
+    <button class="tab-btn" onclick="switchTab('listinghistory')">📋 Listing History</button>
+    <button class="tab-btn" onclick="switchTab('negotiation')">🤝 Negotiation Guide</button>
+    <button class="tab-btn" onclick="switchTab('details')">🏡 Property Details</button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ═══ TAB: INTELLIGENCE ═══ -->
+  <div id="tab-intelligence" class="tab-content active">
+
+    <!-- ALERT BANNERS -->
+    <div class="alert alert-critical">
+      <div class="alert-icon">🚨</div>
+      <div>
+        <div class="alert-title">FAILED CONTRACT DETECTED — August 2024</div>
+        <div class="alert-body">This property went under contract on <strong>August 13, 2024</strong> and returned to market in just <strong>10 days</strong> (August 23, 2024). The deal fell through — likely due to inspection findings, financing issues, or appraisal problems. This is critical intelligence: something stopped the last buyer from proceeding.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-warning">
+      <div class="alert-icon">📅</div>
+      <div>
+        <div class="alert-title">TRUE MARKET EXPOSURE: 187+ CUMULATIVE DAYS</div>
+        <div class="alert-body">The MLS shows <strong>21 days</strong> on market — but this property was listed for <strong>166 days in 2024</strong> before the seller cancelled. Total cumulative exposure across both listings: <strong>187+ days</strong>. The seller relisted with a new agent in March 2026 to reset the counter.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-icon">💰</div>
+      <div>
+        <div class="alert-title">CURRENT PRICE IS $4,000 HIGHER THAN THE CANCELLED LISTING</div>
+        <div class="alert-body">The seller cancelled in September 2024 at <strong>$375,000</strong> after 4 price reductions. The current asking price of <strong>$379,000</strong> is $4,000 higher — despite the property sitting unsold for 166 days. This suggests the seller is anchoring to a higher value with a fresh listing.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-success">
+      <div class="alert-icon">✅</div>
+      <div>
+        <div class="alert-title">LISTED BELOW BCAD APPRAISED VALUE</div>
+        <div class="alert-body">The listing agent notes the property is <strong>"listed for less than BCAD value"</strong> — meaning the Bexar County Appraisal District assessed it above $379,000. This is a genuine market signal: the seller is pricing competitively relative to the county's valuation, even if the history suggests room to negotiate.</div>
+      </div>
+    </div>
+
+    <!-- SCORE -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Seller Motivation Score</div>
+          <div class="card-subtitle">AI-calculated negotiation leverage index (0 = low motivation, 100 = highly motivated seller)</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="score-section">
+          <div class="gauge-wrap">
+            <svg class="gauge-svg" width="160" height="100" viewBox="0 0 160 100">
+              <!-- background arc -->
+              <path d="M 20 90 A 60 60 0 0 1 140 90" stroke="#e8e8e8" stroke-width="14" fill="none" stroke-linecap="round"/>
+              <!-- score arc (74/100 = ~133deg of 180deg arc) -->
+              <path d="M 20 90 A 60 60 0 0 1 140 90" stroke="url(#scoreGrad)" stroke-width="14" fill="none" stroke-linecap="round"
+                stroke-dasharray="188" stroke-dashoffset="49" style="transition: stroke-dashoffset 1.5s ease"/>
+              <defs>
+                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#C9A84C"/>
+                  <stop offset="100%" stop-color="#e67e22"/>
+                </linearGradient>
+              </defs>
+              <text x="80" y="78" text-anchor="middle" font-size="32" font-weight="900" fill="#0a0a0a">74</text>
+              <text x="80" y="96" text-anchor="middle" font-size="10" fill="#888" font-weight="600">OUT OF 100</text>
+            </svg>
+            <div class="gauge-label">HIGH MOTIVATION</div>
+          </div>
+          <div>
+            <div class="score-factors">
+              <div class="factor">
+                <div class="factor-label">Price Reductions (2024)</div>
+                <div class="factor-bar-bg"><div class="factor-bar" style="width:100%;background:#c0392b;"></div></div>
+                <div class="factor-val" style="color:#c0392b;">4 cuts</div>
+              </div>
+              <div class="factor">
+                <div class="factor-label">Total $ Reduction (2024)</div>
+                <div class="factor-bar-bg"><div class="factor-bar" style="width:88%;background:#e67e22;"></div></div>
+                <div class="factor-val" style="color:#e67e22;">-12.7%</div>
+              </div>
+              <div class="factor">
+                <div class="factor-label">Failed Contracts</div>
+                <div class="factor-bar-bg"><div class="factor-bar" style="width:60%;background:#8e44ad;"></div></div>
+                <div class="factor-val" style="color:#8e44ad;">1 BOM</div>
+              </div>
+              <div class="factor">
+                <div class="factor-label">Cumulative DOM</div>
+                <div class="factor-bar-bg"><div class="factor-bar" style="width:92%;background:#C9A84C;"></div></div>
+                <div class="factor-val" style="color:#a07800;">187d</div>
+              </div>
+              <div class="factor">
+                <div class="factor-label">Counter-relisting Signal</div>
+                <div class="factor-bar-bg"><div class="factor-bar" style="width:70%;background:#2980b9;"></div></div>
+                <div class="factor-val" style="color:#2980b9;">+$4K</div>
+              </div>
+            </div>
+            <div class="score-verdict">
+              <div class="score-verdict-title">🧠 Intelligence Verdict</div>
+              <div class="score-verdict-body">This seller has demonstrated <strong>significant motivation</strong>. They reduced price 4 times, endured a failed contract, and ultimately cancelled after 166 days — only to relist 18 months later. The $379,000 ask is slightly above their 2024 exit price, but the history strongly supports making an offer <strong>below list price</strong>, especially leveraging the failed contract as a reason to request inspection disclosures upfront.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK STATS -->
+    <div class="stats-grid">
+      <div class="stat-card gold">
+        <div class="stat-value gold-text">$429,500</div>
+        <div class="stat-label">Original 2024 List Price</div>
+        <div class="stat-sub">Now asking $379K — 11.7% lower</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-value red-text">$54,500</div>
+        <div class="stat-label">Total 2024 Reductions</div>
+        <div class="stat-sub">4 separate price cuts</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-value orange-text">187+</div>
+        <div class="stat-label">True Days on Market</div>
+        <div class="stat-sub">vs. advertised 21 days</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-value purple-text">1</div>
+        <div class="stat-label">Failed Contract (2024)</div>
+        <div class="stat-sub">Fell through in 10 days</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-value" style="color:#2980b9;">$375K</div>
+        <div class="stat-label">2024 Cancelled Price</div>
+        <div class="stat-sub">Current ask is $4K above this</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-value green-text">$221.5K</div>
+        <div class="stat-label">Last Sold Price (2015)</div>
+        <div class="stat-sub">+71% appreciation since sale</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ TAB: PRICE HISTORY ═══ -->
+  <div id="tab-pricehistory" class="tab-content">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Complete Price History — 729 W Kings Hwy</div>
+          <div class="card-subtitle">All listing periods &nbsp;·&nbsp; Hover bars for details</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="alert alert-warning" style="margin-bottom:20px;">
+          <div class="alert-icon">📉</div>
+          <div>
+            <div class="alert-title">2024 LISTING: 4 PRICE CUTS IN 5 MONTHS</div>
+            <div class="alert-body">The 2024 listing started at <strong>$429,500</strong> and was reduced every 4–6 weeks, landing at <strong>$375,000</strong> — a total reduction of <strong>$54,500 (12.7%)</strong> before the listing was cancelled.</div>
+          </div>
+        </div>
+
+        <!-- Price bars -->
+        <div class="price-chart-wrapper">
+          <div class="price-chart">
+            <div class="price-bar-group">
+              <div class="price-bar-amount">$429.5K</div>
+              <div class="tooltip-wrap">
+                <div class="price-bar" style="height:130px;background:#c0392b;" title=""></div>
+                <div class="tooltip">2024 Original List Price<br>$429,500 — Apr 2024</div>
+              </div>
+              <div class="price-bar-label">Apr '24<br>Original</div>
+            </div>
+            <div class="price-bar-group">
+              <div class="price-bar-amount">$419.5K</div>
+              <div class="tooltip-wrap">
+                <div class="price-bar" style="height:124px;background:#e67e22;"></div>
+                <div class="tooltip">Price Cut #1: -$10,000<br>Apr 19, 2024</div>
+              </div>
+              <div class="price-bar-label">Apr '24<br>Cut #1</div>
+            </div>
+            <div class="price-bar-group">
+              <div class="price-bar-amount">$399.5K</div>
+              <div class="tooltip-wrap">
+                <div class="price-bar" style="height:116px;background:#e67e22;"></div>
+                <div class="tooltip">Price Cut #2: -$20,000<br>May 20, 2024</div>
+              </div>
+              <div class="price-bar-label">May '24<br>Cut #2</div>
+            </div>
+            <div class="price-bar-group">
+              <div class="price-bar-amount">$389.5K</div>
+              <div class="tooltip-wrap">
+                <div class="price-bar" style="height:111px;background:#e67e22;"></div>
+                <div class="tooltip">Price Cut #3: -$10,000<br>Jun 18, 2024</div>
+              </div>
+              <div class="price-bar-label">Jun '24<br>Cut #3</div>
+            </div>
+            <div class="price-bar-group">
+              <div class="price-bar-amount">$375K</div>
+              <div class="tooltip-wrap">
+                <div class="price-bar" style="height:104px;background:#e67e22;"></div>
+                <div class="tooltip">Price Cut #4: -$14,500<br>Jul 12, 2024<br>Then went under contract<br>→ fell through → cancelled</div>
+              </div>
+              <div class="price-bar-label">Jul '24<br>Cut #4 / Final</div>
+            </div>
+            <div class="price-bar-group" style="min-width:60px;">
+              <div class="price-bar-amount" style="color:#888;font-size:10px;">CANCELLED</div>
+              <div style="height:20px;display:flex;align-items:center;justify-content:center;">
+                <div style="font-size:18px;">❌</div>
+              </div>
+              <div class="price-bar-label">Sep '24<br>Cancelled</div>
+            </div>
+            <div class="price-bar-group" style="min-width:40px;"></div>
+            <div class="price-bar-group">
+              <div class="price-bar-amount" style="color:#C9A84C;">$379K</div>
+              <div class="tooltip-wrap">
+                <div class="price-bar" style="height:105px;background:#C9A84C;"></div>
+                <div class="tooltip">Current Listing — MLS #1950303<br>$379,000 — Mar 19, 2026<br>NEW AGENT · 21 DOM</div>
+              </div>
+              <div class="price-bar-label" style="color:#C9A84C;font-weight:700;">Mar '26<br>Current ★</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:#aaa;text-align:center;margin-top:8px;">Bar heights are proportional to list price. Hover bars for details.</p>
+
+        <!-- Price reduction table -->
+        <div style="margin-top:24px;">
+          <div class="card-title" style="margin-bottom:12px;">2024 Price Reduction Log</div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead>
+              <tr style="background:#f5f5f5;">
+                <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#888;">#</th>
+                <th style="padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Date</th>
+                <th style="padding:8px 12px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#888;">From</th>
+                <th style="padding:8px 12px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#888;">To</th>
+                <th style="padding:8px 12px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Reduction</th>
+                <th style="padding:8px 12px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#888;">% Cut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #f0f0f0;">
+                <td style="padding:9px 12px;font-weight:700;color:#e67e22;">1</td>
+                <td style="padding:9px 12px;color:#666;">Apr 19, 2024</td>
+                <td style="padding:9px 12px;text-align:right;">$429,500</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:700;">$419,500</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;font-weight:700;">-$10,000</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;">-2.3%</td>
+              </tr>
+              <tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;">
+                <td style="padding:9px 12px;font-weight:700;color:#e67e22;">2</td>
+                <td style="padding:9px 12px;color:#666;">May 20, 2024</td>
+                <td style="padding:9px 12px;text-align:right;">$419,500</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:700;">$399,500</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;font-weight:700;">-$20,000</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;">-4.8%</td>
+              </tr>
+              <tr style="border-bottom:1px solid #f0f0f0;">
+                <td style="padding:9px 12px;font-weight:700;color:#e67e22;">3</td>
+                <td style="padding:9px 12px;color:#666;">Jun 18, 2024</td>
+                <td style="padding:9px 12px;text-align:right;">$399,500</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:700;">$389,500</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;font-weight:700;">-$10,000</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;">-2.5%</td>
+              </tr>
+              <tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;">
+                <td style="padding:9px 12px;font-weight:700;color:#e67e22;">4</td>
+                <td style="padding:9px 12px;color:#666;">Jul 12, 2024</td>
+                <td style="padding:9px 12px;text-align:right;">$389,500</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:700;">$375,000</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;font-weight:700;">-$14,500</td>
+                <td style="padding:9px 12px;text-align:right;color:#c0392b;">-3.7%</td>
+              </tr>
+              <tr style="background:#fffbe8;border-top:2px solid #C9A84C;">
+                <td style="padding:9px 12px;font-weight:700;color:#C9A84C;">TOTAL</td>
+                <td style="padding:9px 12px;color:#666;">Mar–Sep 2024</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:700;">$429,500</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:700;color:#c0392b;">$375,000</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:900;color:#c0392b;">-$54,500</td>
+                <td style="padding:9px 12px;text-align:right;font-weight:900;color:#c0392b;">-12.7%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: LISTING HISTORY ═══ -->
+  <div id="tab-listinghistory" class="tab-content">
+
+    <!-- CURRENT LISTING -->
+    <div class="listing-section-header">
+      <div>
+        <span class="mls-num">MLS #1950303</span>
+        <span style="color:white;margin:0 8px;">—</span>
+        <span class="mls-info">CURRENT · Listed Mar 19, 2026 · Rowan Properties</span>
+      </div>
+      <span class="status-pill status-active" style="font-size:11px;margin:0;">ACTIVE · 21 DOM</span>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="history-timeline">
+          <div class="history-entry">
+            <div class="history-dot" style="background:#27ae60;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-act">ACTIVE</span>
+              <span class="history-desc">Listing goes Active — available to buyers</span>
+              <span class="history-date">Mar 30, 2026</span>
+              <span class="history-price">$379,000</span>
+            </div>
+          </div>
+          <div class="history-entry">
+            <div class="history-dot" style="background:#aaa;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-new">NEW</span>
+              <span class="history-desc">Listing submitted to MLS</span>
+              <span class="history-date">Mar 19, 2026</span>
+              <span class="history-price">$379,000</span>
+            </div>
+            <div class="history-note">⚡ New agent (Rowan Properties). Same property, 18-month gap since last cancelled listing. DOM counter reset to 0.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2024 LISTING -->
+    <div class="listing-section-header" style="background:#2a1a1a;">
+      <div>
+        <span class="mls-num">MLS #1759065</span>
+        <span style="color:white;margin:0 8px;">—</span>
+        <span class="mls-info">CANCELLED · Listed Mar 15, 2024 · 166 DOM · SUBU00</span>
+      </div>
+      <span class="status-pill status-cancelled" style="font-size:11px;margin:0;">CANCELLED · 166 DOM</span>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="history-timeline">
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#c0392b;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-can">CANCELLED</span>
+              <span class="history-desc">Listing cancelled — seller gives up</span>
+              <span class="history-date">Sep 3, 2024</span>
+              <span class="history-price">$375,000</span>
+            </div>
+            <div class="history-note red">🚩 After 166 days, 4 price cuts, and 1 failed contract, the seller cancelled the listing entirely.</div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#27ae60;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-act">ACTIVE</span>
+              <span class="history-desc">Back to Active (same day as BOM)</span>
+              <span class="history-date">Sep 3, 2024</span>
+              <span class="history-price">$375,000</span>
+            </div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#c0392b;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-bom">BACK ON MARKET</span>
+              <span class="history-desc">⚠️ CONTRACT FAILED — Back on market after only 10 days</span>
+              <span class="history-date">Aug 23, 2024</span>
+              <span class="history-price">$375,000</span>
+            </div>
+            <div class="history-note red">🚨 FAILED CONTRACT: The property went under offer on Aug 13 and the deal collapsed in just 10 days. This could indicate: failed inspection, appraisal gap, financing issues, or title problems. This is a red flag worth investigating.</div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#8e44ad;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-ao">UNDER OFFER</span>
+              <span class="history-desc">Property goes under contract (Accepting Offers)</span>
+              <span class="history-date">Aug 13, 2024</span>
+              <span class="history-price">$375,000</span>
+            </div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#27ae60;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-act">ACTIVE</span>
+              <span class="history-desc">Back to Active after price cut #4</span>
+              <span class="history-date">Jul 23, 2024</span>
+              <span class="history-price">$375,000</span>
+            </div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#e67e22;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-pch">PRICE CUT #4</span>
+              <span class="history-desc">$389,500 → $375,000 — Cut #4 of 4</span>
+              <span class="history-date">Jul 12, 2024</span>
+              <span class="history-price" style="color:#c0392b;">-$14,500</span>
+            </div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#e67e22;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-pch">PRICE CUT #3</span>
+              <span class="history-desc">$399,500 → $389,500</span>
+              <span class="history-date">Jun 18, 2024</span>
+              <span class="history-price" style="color:#c0392b;">-$10,000</span>
+            </div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#e67e22;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-pch">PRICE CUT #2</span>
+              <span class="history-desc">$419,500 → $399,500</span>
+              <span class="history-date">May 20, 2024</span>
+              <span class="history-price" style="color:#c0392b;">-$20,000</span>
+            </div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#e67e22;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-pch">PRICE CUT #1</span>
+              <span class="history-desc">$429,500 → $419,500</span>
+              <span class="history-date">Apr 19, 2024</span>
+              <span class="history-price" style="color:#c0392b;">-$10,000</span>
+            </div>
+            <div class="history-note">First reduction came just 18 days after going active — seller was quick to respond to market feedback.</div>
+          </div>
+
+          <div class="history-entry">
+            <div class="history-dot" style="background:#27ae60;"></div>
+            <div class="history-entry-header">
+              <span class="history-badge badge-act">ACTIVE</span>
+              <span class="history-desc">Original list date — $429,500</span>
+              <span class="history-date">Apr 1, 2024</span>
+              <span class="history-price">$429,500</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 2015 LISTING -->
+    <div class="listing-section-header" style="background:#1a2a1a;">
+      <div>
+        <span class="mls-num">MLS #1086214</span>
+        <span style="color:white;margin:0 8px;">—</span>
+        <span class="mls-info">SOLD · Listed Nov 2014 · Sold Feb 7, 2015 · $221,500</span>
+      </div>
+      <span class="status-pill status-sold" style="font-size:11px;margin:0;">SOLD · $221,500</span>
+    </div>
+    <div class="card">
+      <div class="card-body" style="font-size:13px;color:#666;padding:14px 20px;">
+        Listed Nov 4, 2014 at $216,900 &nbsp;·&nbsp; Sold Feb 7, 2015 for <strong>$221,500</strong> (above asking) &nbsp;·&nbsp; 47 DOM &nbsp;·&nbsp; Had 1 BOM event during this listing period.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ TAB: NEGOTIATION ═══ -->
+  <div id="tab-negotiation" class="tab-content">
+
+    <div class="nego-box">
+      <div class="nego-box-title">🧠 Your Negotiation Advantage</div>
+      <div class="nego-box-body">
+        This listing has a <span class="highlight">Seller Motivation Score of 74/100</span> — placing it in the <strong>High Motivation</strong> category.
+        The data tells a clear story: this seller has been trying to move this property for over <strong>2 years</strong>, endured <strong>4 price cuts</strong>, a <strong>failed contract</strong>, and ultimately <strong>cancelled</strong> before relisting with a new agent. They are motivated. Your client has meaningful leverage.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Recommended Offer Strategies</div></div>
+      <div class="card-body">
+        <ul class="nego-strategies">
+          <li>
+            <strong>💡 Start below $375,000</strong>
+            The seller already accepted $375,000 as a realistic exit price in 2024. Opening at or below that number is completely defensible — you can cite the 4-year listing history and cancelled listing as justification.
+          </li>
+          <li>
+            <strong>🔍 Request full inspection disclosure upfront</strong>
+            A contract failed in August 2024 after just 10 days — something killed that deal. Before going under contract, ask the seller's agent directly what the prior buyer's concerns were. If they won't share, make your inspection contingency ironclad.
+          </li>
+          <li>
+            <strong>📅 Use timeline as leverage</strong>
+            The seller has been trying to sell this property since March 2024. A clean, fast-closing offer — even below ask — is extremely attractive to a seller who has been burned twice. Offer a 21-day close with no unnecessary contingencies to compete on terms, not price.
+          </li>
+          <li>
+            <strong>🏠 Pier & Beam foundation — budget for inspection</strong>
+            The home was built in 1927 with a pier &amp; beam foundation. These require specific inspection expertise. Budget $350–600 for a structural specialist in addition to general inspection. Previous failed contract may have been foundation-related.
+          </li>
+          <li>
+            <strong>📊 The BCAD card works both ways</strong>
+            The listing agent claims it's "priced below BCAD value" — this is accurate but doesn't define fair market value. BCAD assessments often lag the market. Rely on true comparable sales, not the tax appraisal, when justifying your offer price.
+          </li>
+          <li>
+            <strong>💰 Target offer range: $360,000 – $372,000</strong>
+            Given the history, a strong opening offer in this range is well-supported. If the seller counters, you have room to move toward $375,000 while still landing below list price. At $360K, your client would be getting the home for <strong>16% below the 2024 original list</strong>.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-title">Questions to Ask the Seller's Agent</div></div>
+      <div class="card-body">
+        <div class="history-timeline">
+          <div class="history-entry"><div class="history-dot" style="background:#C9A84C;"></div><div><div class="history-desc">Why did the August 2024 contract fall through?</div><div class="history-date" style="margin-top:3px;">Critical — the answer will shape your inspection strategy</div></div></div>
+          <div class="history-entry"><div class="history-dot" style="background:#C9A84C;"></div><div><div class="history-desc">Has the seller had a pre-listing inspection done since the 2024 failed contract?</div><div class="history-date" style="margin-top:3px;">If yes, request the report. If no, that's a negotiation point.</div></div></div>
+          <div class="history-entry"><div class="history-dot" style="background:#C9A84C;"></div><div><div class="history-desc">What is the seller's ideal closing timeline?</div><div class="history-date" style="margin-top:3px;">A motivated seller often values speed over price — use this to your advantage</div></div></div>
+          <div class="history-entry"><div class="history-dot" style="background:#C9A84C;"></div><div><div class="history-desc">Are there any known issues with the pier & beam foundation?</div><div class="history-date" style="margin-top:3px;">1927 construction — structural integrity is a key risk factor</div></div></div>
+          <div class="history-entry"><div class="history-dot" style="background:#C9A84C;"></div><div><div class="history-desc">Is the seller currently receiving any other offers?</div><div class="history-date" style="margin-top:3px;">Helps calibrate urgency and competitiveness of your offer</div></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ TAB: PROPERTY DETAILS ═══ -->
+  <div id="tab-details" class="tab-content">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Full Property Details — 729 W Kings Hwy</div></div>
+      <div class="card-body">
+        <div class="details-grid">
+          <div>
+            <div class="detail-group">
+              <div class="detail-group-title">Key Facts</div>
+              <div class="detail-row"><span class="detail-key">MLS #</span><span class="detail-val">1950303</span></div>
+              <div class="detail-row"><span class="detail-key">Status</span><span class="detail-val" style="color:#27ae60;font-weight:700;">ACTIVE</span></div>
+              <div class="detail-row"><span class="detail-key">List Price</span><span class="detail-val">$379,000</span></div>
+              <div class="detail-row"><span class="detail-key">Price / Sq Ft</span><span class="detail-val">$199.68</span></div>
+              <div class="detail-row"><span class="detail-key">List Date</span><span class="detail-val">March 19, 2026</span></div>
+              <div class="detail-row"><span class="detail-key">Days on Market</span><span class="detail-val">21 (advertised)</span></div>
+              <div class="detail-row"><span class="detail-key">True Cumulative DOM</span><span class="detail-val" style="color:#c0392b;font-weight:700;">187+</span></div>
+              <div class="detail-row"><span class="detail-key">Tax (2025)</span><span class="detail-val">$9,892/yr</span></div>
+              <div class="detail-row"><span class="detail-key">HOA</span><span class="detail-val" style="color:#27ae60;">None</span></div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-group-title">Property</div>
+              <div class="detail-row"><span class="detail-key">Type</span><span class="detail-val">Single Family Detached</span></div>
+              <div class="detail-row"><span class="detail-key">Style</span><span class="detail-val">Craftsman / Historic</span></div>
+              <div class="detail-row"><span class="detail-key">Year Built</span><span class="detail-val">1927</span></div>
+              <div class="detail-row"><span class="detail-key">Sq Footage</span><span class="detail-val">1,898 sq ft</span></div>
+              <div class="detail-row"><span class="detail-key">Lot Size</span><span class="detail-val">0.169 acres</span></div>
+              <div class="detail-row"><span class="detail-key">Stories</span><span class="detail-val">1</span></div>
+              <div class="detail-row"><span class="detail-key">Foundation</span><span class="detail-val" style="color:#e67e22;">Pier &amp; Beam ⚠</span></div>
+              <div class="detail-row"><span class="detail-key">Roof</span><span class="detail-val" style="color:#27ae60;">Composition (New) ✓</span></div>
+              <div class="detail-row"><span class="detail-key">Exterior</span><span class="detail-val">Siding (w/ Spray Foam)</span></div>
+              <div class="detail-row"><span class="detail-key">Garage</span><span class="detail-val">2-Car, Rear Entry</span></div>
+              <div class="detail-row"><span class="detail-key">Pool/Spa</span><span class="detail-val">None</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="detail-group">
+              <div class="detail-group-title">Interior</div>
+              <div class="detail-row"><span class="detail-key">Bedrooms</span><span class="detail-val">3 (dual primaries)</span></div>
+              <div class="detail-row"><span class="detail-key">Bathrooms</span><span class="detail-val">3 full</span></div>
+              <div class="detail-row"><span class="detail-key">Fireplace</span><span class="detail-val">Yes — wood burning</span></div>
+              <div class="detail-row"><span class="detail-key">Flooring</span><span class="detail-val">Wood / Tile / Carpet</span></div>
+              <div class="detail-row"><span class="detail-key">Kitchen</span><span class="detail-val">Granite, SS appliances</span></div>
+              <div class="detail-row"><span class="detail-key">Inclusions</span><span class="detail-val">Washer, Dryer, Fridge</span></div>
+              <div class="detail-row"><span class="detail-key">A/C</span><span class="detail-val">One Central</span></div>
+              <div class="detail-row"><span class="detail-key">Heating</span><span class="detail-val">Central / Natural Gas</span></div>
+              <div class="detail-row"><span class="detail-key">Water Heater</span><span class="detail-val">Gas</span></div>
+              <div class="detail-row"><span class="detail-key">Windows</span><span class="detail-val" style="color:#27ae60;">Double Pane (New) ✓</span></div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-group-title">Schools &amp; Location</div>
+              <div class="detail-row"><span class="detail-key">District</span><span class="detail-val">San Antonio ISD</span></div>
+              <div class="detail-row"><span class="detail-key">Elementary</span><span class="detail-val">Beacon Hill</span></div>
+              <div class="detail-row"><span class="detail-key">Middle</span><span class="detail-val">Cotton</span></div>
+              <div class="detail-row"><span class="detail-key">High School</span><span class="detail-val">Edison</span></div>
+              <div class="detail-row"><span class="detail-key">Neighborhood</span><span class="detail-val">Beacon Hill</span></div>
+              <div class="detail-row"><span class="detail-key">Home Faces</span><span class="detail-val">South</span></div>
+              <div class="detail-row"><span class="detail-key">Amenities</span><span class="detail-val">Park, Trails, Sports Court</span></div>
+            </div>
+            <div class="detail-group">
+              <div class="detail-group-title">Listing Info</div>
+              <div class="detail-row"><span class="detail-key">List Agent</span><span class="detail-val">Jaime Rowan</span></div>
+              <div class="detail-row"><span class="detail-key">List Office</span><span class="detail-val">Rowan Properties</span></div>
+              <div class="detail-row"><span class="detail-key">Terms</span><span class="detail-val">Conv / FHA / VA / Cash</span></div>
+              <div class="detail-row"><span class="detail-key">Title Co.</span><span class="detail-val">Independence Title</span></div>
+              <div class="detail-row"><span class="detail-key">Showing</span><span class="detail-val">ShowingTime</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .main -->
+
+<!-- FOOTER -->
+<div class="portal-footer">
+  <strong>ALL CITY HOMES</strong> &nbsp;·&nbsp; chris@allcityhomestx.com &nbsp;·&nbsp; allcityhomestx.com &nbsp;·&nbsp;
+  Report generated April 9, 2026 &nbsp;·&nbsp; Data source: LERA MLS / connectMLS &nbsp;·&nbsp; <em>For client use only — not for distribution</em>
+</div>
+
+<script>
+  function switchTab(tabName) {
+    // Update buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    // Update content
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+  }
+
+  // Animate factor bars on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.factor-bar').forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => { bar.style.width = width; }, 100);
+      });
+    }, 300);
+  });
+</script>
+
+</body>
+</html>
