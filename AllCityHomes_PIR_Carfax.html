@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All City Homes | Property Intelligence Report — 729 W Kings Hwy</title>
+<style>
+:root {
+  --black:#0a0a0a; --gold:#C9A84C; --gold-light:#fff8e1; --white:#fff;
+  --g100:#f5f5f5; --g200:#e8e8e8; --g300:#d0d0d0; --g400:#aaa; --g600:#666; --g800:#333;
+  --red:#c0392b; --red-l:#fdf0ef; --orange:#e67e22; --orange-l:#fef5ec;
+  --green:#27ae60; --green-l:#edfaf4; --blue:#2980b9; --blue-l:#eef6fc;
+  --purple:#8e44ad; --purple-l:#f5eefb; --teal:#00897b; --teal-l:#e0f2f1;
+  --radius:10px; --shadow:0 2px 16px rgba(0,0,0,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#eaeaea;color:var(--g800)}
+
+/* HEADER */
+.hdr{background:var(--black);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--gold)}
+.hdr-logo{font-weight:900;font-size:17px;color:#fff;letter-spacing:.05em}.hdr-logo span{color:var(--gold)}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.hdr-badge{background:var(--gold);color:var(--black);font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:.05em}
+.share-btn{background:#fff;color:var(--black);border:none;font-size:12px;font-weight:700;padding:7px 16px;border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s}
+.share-btn:hover{background:var(--gold);color:var(--black)}
+
+/* PROPERTY HERO */
+.hero{background:var(--black);padding:22px 24px 0;color:#fff}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+.hero-addr{font-size:26px;font-weight:900;line-height:1.2;margin-bottom:4px}
+.hero-meta{font-size:13px;color:var(--g400);margin-bottom:14px}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.hchip{font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;letter-spacing:.04em}
+.hc-active{background:#27ae60;color:#fff}
+.hc-warn{background:#fef5ec;color:#e67e22;border:1px solid #fcd6a4}
+.hc-red{background:#fdf0ef;color:#c0392b;border:1px solid #f5c6c2}
+.hc-gold{background:var(--gold-light);color:#7a5c00;border:1px solid #e0c84a}
+.hero-stats{display:flex;gap:24px;flex-wrap:wrap}
+.hstat .v{font-size:20px;font-weight:800;color:#fff;display:block}
+.hstat .l{font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:.06em}
+.hero-price{text-align:right}
+.hp-main{font-size:36px;font-weight:900;color:var(--gold);line-height:1}
+.hp-sub{font-size:12px;color:var(--g400);margin-top:4px}
+
+/* TOGGLE PANEL */
+.toggle-bar{background:#1a1a1a;border-bottom:2px solid #2a2a2a;padding:12px 24px;display:flex;align-items:center;gap:8px;overflow-x:auto;flex-wrap:wrap}
+.tbar-label{font-size:11px;color:var(--g400);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-right:4px;white-space:nowrap}
+.toggle-chip{display:flex;align-items:center;gap:6px;background:#2a2a2a;border:1.5px solid #3a3a3a;border-radius:20px;padding:5px 12px;cursor:pointer;transition:all .2s;white-space:nowrap;user-select:none}
+.toggle-chip.on{border-color:var(--gold);background:#2a2200}
+.toggle-chip .dot{width:8px;height:8px;border-radius:50%;background:#555;transition:background .2s}
+.toggle-chip.on .dot{background:var(--gold)}
+.toggle-chip .lbl{font-size:11px;font-weight:600;color:var(--g400);transition:color .2s}
+.toggle-chip.on .lbl{color:var(--gold)}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:1fr;gap:16px;padding:20px 24px;max-width:1100px;margin:0 auto}
+
+/* CARDS */
+.card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:all .3s}
+.card.hidden{display:none}
+.ch{padding:14px 18px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between}
+.ch-left{display:flex;align-items:center;gap:10px}
+.ch-icon{font-size:18px}
+.ch-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g800)}
+.ch-sub{font-size:11px;color:var(--g400);margin-top:1px}
+.cb{padding:18px}
+
+/* ALERTS */
+.alert{border-radius:8px;padding:13px 16px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.a-icon{font-size:20px;flex-shrink:0}
+.a-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.a-body{font-size:12.5px;line-height:1.55}
+.a-crit{background:var(--red-l);border-left:4px solid var(--red)}.a-crit .a-title{color:var(--red)}
+.a-warn{background:var(--orange-l);border-left:4px solid var(--orange)}.a-warn .a-title{color:var(--orange)}
+.a-info{background:var(--blue-l);border-left:4px solid var(--blue)}.a-info .a-title{color:var(--blue)}
+.a-good{background:var(--green-l);border-left:4px solid var(--green)}.a-good .a-title{color:var(--green)}
+.a-gold{background:var(--gold-light);border-left:4px solid var(--gold)}.a-gold .a-title{color:#7a5c00}
+
+/* STAT GRID */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+.scard{background:#fff;border-radius:8px;padding:14px;box-shadow:var(--shadow);text-align:center;border-top:3px solid transparent}
+.scard .sv{font-size:26px;font-weight:900;line-height:1;margin-bottom:3px}
+.scard .sl{font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.scard .ss{font-size:11px;color:var(--g600);margin-top:3px}
+
+/* SCORE GAUGE */
+.gauge-row{display:grid;grid-template-columns:160px 1fr;gap:20px;align-items:center}
+.gauge-center{text-align:center}
+.factors{display:flex;flex-direction:column;gap:10px}
+.factor{display:flex;align-items:center;gap:10px}
+.flbl{width:180px;font-size:12px;color:var(--g600);flex-shrink:0}
+.fbar-bg{flex:1;height:7px;background:var(--g200);border-radius:4px;overflow:hidden}
+.fbar{height:100%;border-radius:4px;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
+.fval{width:40px;font-size:11px;font-weight:700;text-align:right}
+.verdict{margin-top:14px;padding:13px 15px;background:var(--gold-light);border-radius:8px;border-left:4px solid var(--gold);font-size:13px;line-height:1.6;color:var(--g800)}
+.verdict strong{color:var(--black)}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:2px;background:var(--g200)}
+.te{position:relative;padding:10px 0 10px 18px;border-bottom:1px solid var(--g100)}
+.te:last-child{border-bottom:none}
+.tdot{position:absolute;left:-20px;top:14px;width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px var(--g200)}
+.te-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+.tbadge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.04em}
+.b-act{background:var(--green-l);color:var(--green)}
+.b-pch{background:var(--orange-l);color:var(--orange)}
+.b-bom{background:var(--red-l);color:var(--red)}
+.b-ao{background:var(--purple-l);color:var(--purple)}
+.b-can{background:var(--red-l);color:var(--red)}
+.b-sld{background:var(--blue-l);color:var(--blue)}
+.b-new{background:var(--g100);color:var(--g600)}
+.te-desc{font-size:13px;font-weight:600;color:var(--g800)}
+.te-date{font-size:11px;color:var(--g400)}
+.te-price{font-size:12px;font-weight:700;color:var(--g600);margin-left:auto}
+.te-note{font-size:12px;color:var(--g600);margin-top:5px;padding:6px 10px;background:var(--g100);border-radius:6px;border-left:3px solid var(--gold);line-height:1.5}
+.te-note.red{border-left-color:var(--red);background:var(--red-l);color:var(--red)}
+
+/* LISTING SECTION HEADER */
+.lsh{background:var(--black);border-radius:8px;padding:10px 14px;margin:16px 0 10px;display:flex;align-items:center;justify-content:space-between}
+.lsh-mls{font-size:12px;font-weight:700;color:var(--gold)}
+.lsh-info{font-size:11px;color:var(--g400);margin-left:8px}
+.spill{font-size:10px;font-weight:700;padding:3px 10px;border-radius:12px}
+.sp-act{background:#27ae60;color:#fff}
+.sp-can{background:#c0392b;color:#fff}
+.sp-sld{background:#2980b9;color:#fff}
+
+/* TABLE */
+.dtbl{width:100%;border-collapse:collapse;font-size:13px}
+.dtbl th{padding:8px 12px;background:var(--g100);text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--g600);font-weight:700;border-bottom:2px solid var(--g200)}
+.dtbl td{padding:8px 12px;border-bottom:1px solid var(--g100);vertical-align:top}
+.dtbl tr:last-child td{border-bottom:none}
+.dtbl tr:hover td{background:#fafafa}
+
+/* DETAIL GRID */
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 24px}
+.dgroup{margin-bottom:14px}
+.dgtitle{font-size:10px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid var(--g200)}
+.drow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.drow:last-child{border-bottom:none}
+.dk{color:var(--g600)}
+.dv{font-weight:600;color:var(--g800);text-align:right;max-width:58%}
+
+/* RISK METER */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.risk-item{background:var(--g100);border-radius:8px;padding:14px;text-align:center}
+.risk-icon{font-size:28px;margin-bottom:6px}
+.risk-label{font-size:12px;font-weight:700;color:var(--g800);margin-bottom:6px}
+.risk-bar-bg{height:8px;background:var(--g200);border-radius:4px;overflow:hidden;margin-bottom:6px}
+.risk-bar{height:100%;border-radius:4px}
+.risk-level{font-size:11px;font-weight:700}
+
+/* COMPS TABLE */
+.comp-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px;padding:10px 0;border-bottom:1px solid var(--g100);align-items:center;font-size:13px}
+.comp-row.header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--g400);border-bottom:2px solid var(--g200)}
+.comp-row:last-child{border-bottom:none}
+.comp-highlight{background:var(--gold-light);border-radius:6px;padding:10px;border:1px solid #e0c84a}
+
+/* MORTGAGE CALC */
+.mort-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mort-scenario{background:var(--g100);border-radius:8px;padding:14px}
+.mort-title{font-size:12px;font-weight:700;color:var(--g800);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.mort-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;border-bottom:1px solid var(--g200)}
+.mort-row:last-child{border-bottom:none}
+.mort-total{background:var(--black);color:#fff;border-radius:8px;padding:14px;text-align:center;margin-top:14px}
+.mort-total .amt{font-size:32px;font-weight:900;color:var(--gold)}
+.mort-total .lbl{font-size:11px;color:var(--g400);margin-top:3px}
+
+/* PERMIT TABLE */
+.permit-status-yes{color:var(--green);font-weight:700}
+.permit-status-no{color:var(--red);font-weight:700}
+.permit-status-unk{color:var(--orange);font-weight:700}
+
+/* OWNERSHIP */
+.own-timeline{display:flex;flex-direction:column;gap:0}
+.own-entry{display:grid;grid-template-columns:100px 1fr 1fr 80px;gap:12px;padding:12px 0;border-bottom:1px solid var(--g100);align-items:center;font-size:13px}
+.own-entry.header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--g400);border-bottom:2px solid var(--g200)}
+.own-entry:last-child{border-bottom:none}
+.own-year{font-size:13px;font-weight:700;color:var(--g800)}
+.own-price{font-weight:700;color:var(--blue)}
+.own-hold{font-size:11px;color:var(--g400)}
+
+/* SCHOOL CARDS */
+.school-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.school-card{background:var(--g100);border-radius:8px;padding:14px;text-align:center}
+.school-score{font-size:36px;font-weight:900;line-height:1;margin-bottom:4px}
+.school-name{font-size:13px;font-weight:700;color:var(--g800);margin-bottom:2px}
+.school-type{font-size:11px;color:var(--g400)}
+.school-bar{height:6px;border-radius:3px;margin:8px 0 4px;background:var(--g200);overflow:hidden}
+.school-bar-fill{height:100%;border-radius:3px}
+
+/* LIFESTYLE */
+.life-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.life-card{background:var(--g100);border-radius:8px;padding:14px;text-align:center}
+.life-score{font-size:32px;font-weight:900;margin-bottom:4px}
+.life-label{font-size:11px;font-weight:700;color:var(--g600);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.life-desc{font-size:11px;color:var(--g400);line-height:1.4}
+
+/* NEGO */
+.nego-box{background:linear-gradient(135deg,var(--black),#1a1a1a);color:#fff;border-radius:8px;padding:20px;margin-bottom:14px}
+.nego-box-title{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.nego-box-body{font-size:13px;line-height:1.7;color:#bbb}
+.nego-box-body strong{color:#fff}
+.nego-box-body .hl{color:var(--gold);font-weight:700}
+.strat-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.strat-item{padding:12px 14px;background:#fff;border-radius:8px;font-size:13px;border-left:4px solid var(--gold);box-shadow:var(--shadow);line-height:1.55}
+.strat-item strong{display:block;margin-bottom:2px;color:var(--black)}
+
+/* DISCLOSURE */
+.disc-category{margin-bottom:16px}
+.disc-cat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:6px;margin-bottom:6px;cursor:pointer}
+.disc-cat-header .dct{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.disc-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:6px;margin-bottom:4px;font-size:13px}
+.disc-flag{font-size:14px;flex-shrink:0;margin-top:1px}
+.disc-text{line-height:1.5}
+.disc-item.critical{background:var(--red-l)}
+.disc-item.notable{background:var(--orange-l)}
+.disc-item.clean{background:var(--green-l)}
+
+/* APPRECIATION CALCULATOR */
+.appr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.appr-chart{position:relative;height:160px;display:flex;align-items:flex-end;gap:8px;padding:0 0 28px;border-bottom:2px solid var(--g200);margin-bottom:16px}
+.appr-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.appr-bar{width:100%;border-radius:4px 4px 0 0;transition:height 1.2s cubic-bezier(.4,0,.2,1);position:relative}
+.appr-bar-val{font-size:10px;font-weight:700;color:var(--g800);white-space:nowrap}
+.appr-bar-yr{font-size:10px;color:var(--g400);margin-top:4px}
+.proj-table{width:100%;border-collapse:collapse;font-size:12px}
+.proj-table th{padding:6px 8px;background:var(--black);color:var(--gold);font-size:10px;text-transform:uppercase;letter-spacing:.05em;text-align:center}
+.proj-table td{padding:7px 8px;border-bottom:1px solid var(--g100);text-align:center}
+.proj-table tr:last-child td{border-bottom:none;font-weight:700;background:var(--gold-light)}
+.proj-table .yr{text-align:left;font-weight:600;color:var(--g800)}
+.equity-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.equity-row:last-child{border-bottom:none}
+
+/* RENTAL COMPS */
+.rent-hero{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.rent-metric{background:var(--g100);border-radius:8px;padding:14px 16px;flex:1;min-width:120px;text-align:center}
+.rent-metric .rv{font-size:24px;font-weight:900;line-height:1;margin-bottom:3px}
+.rent-metric .rl{font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.rent-comp-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:8px;padding:9px 0;border-bottom:1px solid var(--g100);align-items:center;font-size:12.5px}
+.rent-comp-row.hdr{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--g400);border-bottom:2px solid var(--g200)}
+.rent-comp-row:last-child{border-bottom:none}
+.cashflow-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.cf-scenario{background:var(--g100);border-radius:8px;padding:14px}
+.cf-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--g600);margin-bottom:10px}
+.cf-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--g200)}
+.cf-row:last-child{border-bottom:none;font-weight:700;font-size:13px;padding-top:8px}
+.cf-pos{color:var(--green)}
+.cf-neg{color:var(--red)}
+
+/* FOOTER */
+.footer{background:var(--black);text-align:center;padding:16px 24px;font-size:11px;color:var(--g400);border-top:3px solid var(--gold);margin-top:32px}
+.footer strong{color:var(--gold)}
+
+/* SHARE MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:28px;width:90%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-title{font-size:18px;font-weight:800;margin-bottom:6px;color:var(--black)}
+.modal-sub{font-size:13px;color:var(--g600);margin-bottom:20px}
+.modal-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g400);margin-bottom:8px;margin-top:14px}
+.modal-toggle-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.modal-chip{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:16px;border:1.5px solid var(--g300);cursor:pointer;font-size:12px;font-weight:600;color:var(--g600);transition:all .15s;background:#fff}
+.modal-chip.on{border-color:var(--gold);background:var(--gold-light);color:#7a5c00}
+.modal-actions{display:flex;gap:10px;margin-top:18px}
+.btn-primary{flex:1;padding:12px;background:var(--black);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-primary:hover{background:#222}
+.btn-secondary{padding:12px 20px;background:var(--g100);color:var(--g800);border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer}
+.url-box{background:var(--g100);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--g600);font-family:monospace;border:1px solid var(--g200);margin-top:10px;word-break:break-all}
+
+@media(max-width:700px){
+  .layout{padding:12px}.hero{padding:16px 14px 0}
+  .gauge-row{grid-template-columns:1fr}.mort-grid{grid-template-columns:1fr}
+  .comp-row{grid-template-columns:1fr 1fr}
+}
+
+/* PRICE BAR CHART */
+.pbars{display:flex;align-items:flex-end;gap:6px;height:140px;padding:0 8px;overflow-x:auto}
+.pbar-grp{display:flex;flex-direction:column;align-items:center;min-width:72px}
+.pbar{width:48px;border-radius:5px 5px 0 0;cursor:pointer;transition:filter .2s;position:relative}
+.pbar:hover{filter:brightness(1.12)}
+.pbar-amt{font-size:10px;font-weight:800;text-align:center;margin-bottom:3px;color:var(--g800)}
+.pbar-lbl{font-size:10px;text-align:center;color:var(--g600);margin-top:5px;line-height:1.3}
+</style>
+</head>
+<body>
+
+<!-- SHARE MODAL -->
+<div class="modal-bg" id="shareModal">
+  <div class="modal">
+    <div class="modal-title">📤 Share This Report</div>
+    <div class="modal-sub">Choose which sections to include, then send the link to your client.</div>
+    <div class="modal-section-label">Sections to Share</div>
+    <div class="modal-toggle-grid" id="modalToggles"></div>
+    <div class="modal-section-label">Shareable Link</div>
+    <div class="url-box">allcityhomestx.com/report/1950303?client=preview&amp;sections=all</div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="closeModal()">📧 Send to Client</button>
+      <button class="btn-secondary" onclick="closeModal()">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-logo">ALL CITY <span>HOMES</span></div>
+  <div class="hdr-right">
+    <span style="font-size:12px;color:var(--g400)">Property Intelligence Report</span>
+    <span class="hdr-badge">CARFAX FOR LISTINGS™</span>
+    <button class="share-btn" onclick="openModal()">📤 Share Report</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="hero-chips">
+        <span class="hchip hc-active">● ACTIVE</span>
+        <span class="hchip hc-red">🚨 1 Failed Contract</span>
+        <span class="hchip hc-warn">⏱ 187+ True DOM</span>
+        <span class="hchip hc-gold">🏡 Beacon Hill</span>
+        <span class="hchip hc-gold">Built 1927 · Craftsman</span>
+      </div>
+      <div class="hero-addr">729 W Kings Hwy</div>
+      <div class="hero-meta">San Antonio, TX 78212 &nbsp;·&nbsp; MLS #1950303 &nbsp;·&nbsp; Bexar County &nbsp;·&nbsp; LERA MLS</div>
+      <div class="hero-stats">
+        <div class="hstat"><span class="v">3</span><span class="l">Beds</span></div>
+        <div class="hstat"><span class="v">3</span><span class="l">Baths</span></div>
+        <div class="hstat"><span class="v">1,898</span><span class="l">Sq Ft</span></div>
+        <div class="hstat"><span class="v">0.169</span><span class="l">Acres</span></div>
+        <div class="hstat"><span class="v">$199.68</span><span class="l">/ Sq Ft</span></div>
+        <div class="hstat"><span class="v">1927</span><span class="l">Year Built</span></div>
+      </div>
+    </div>
+    <div class="hero-price">
+      <div class="hp-main">$379,000</div>
+      <div class="hp-sub">Listed 03/19/2026 · 21 DOM (advertised)</div>
+      <div class="hp-sub" style="color:#c0392b;font-weight:700;margin-top:4px">True exposure: 187+ days</div>
+    </div>
+  </div>
+
+  <!-- TOGGLE BAR -->
+  <div class="toggle-bar">
+    <span class="tbar-label">Show Sections:</span>
+    <div class="toggle-chip on" data-module="intelligence" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🧠 Intelligence</span></div>
+    <div class="toggle-chip on" data-module="listing-dna" onclick="toggle(this)"><span class="dot"></span><span class="lbl">📋 Listing DNA</span></div>
+    <div class="toggle-chip on" data-module="price-history" onclick="toggle(this)"><span class="dot"></span><span class="lbl">📉 Price History</span></div>
+    <div class="toggle-chip on" data-module="ownership" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🔑 Ownership History</span></div>
+    <div class="toggle-chip on" data-module="tax-assessment" onclick="toggle(this)"><span class="dot"></span><span class="lbl">💵 Tax & Assessment</span></div>
+    <div class="toggle-chip on" data-module="permits" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🔧 Permit History</span></div>
+    <div class="toggle-chip on" data-module="disclosure" onclick="toggle(this)"><span class="dot"></span><span class="lbl">📄 Disclosure AI</span></div>
+    <div class="toggle-chip on" data-module="inspection-risk" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🔍 Inspection Risk</span></div>
+    <div class="toggle-chip on" data-module="comps" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🏘 Comp Sales</span></div>
+    <div class="toggle-chip on" data-module="cost-of-ownership" onclick="toggle(this)"><span class="dot"></span><span class="lbl">💰 True Cost</span></div>
+    <div class="toggle-chip on" data-module="hazard" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🌊 Hazard Risk</span></div>
+    <div class="toggle-chip on" data-module="schools" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🎓 Schools</span></div>
+    <div class="toggle-chip on" data-module="neighborhood" onclick="toggle(this)"><span class="dot"></span><span class="lbl">📍 Neighborhood</span></div>
+    <div class="toggle-chip on" data-module="lifestyle" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🚶 Lifestyle Scores</span></div>
+    <div class="toggle-chip on" data-module="negotiation" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🤝 Negotiation Guide</span></div>
+    <div class="toggle-chip on" data-module="appreciation" onclick="toggle(this)"><span class="dot"></span><span class="lbl">📈 Appreciation Calc</span></div>
+    <div class="toggle-chip on" data-module="rental-comps" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🏠 Rental Analysis</span></div>
+    <div class="toggle-chip on" data-module="property-details" onclick="toggle(this)"><span class="dot"></span><span class="lbl">🏡 Property Details</span></div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+<!-- ══ INTELLIGENCE ══ -->
+<div class="card" id="mod-intelligence">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🧠</span><div><div class="ch-title">Intelligence Report</div><div class="ch-sub">AI-powered analysis of all listing data</div></div></div><span style="font-size:11px;color:var(--g400)">Updated 04/09/2026</span></div>
+  <div class="cb">
+    <div class="alert a-crit"><div class="a-icon">🚨</div><div><div class="a-title">FAILED CONTRACT — August 2024 (10 days under contract)</div><div class="a-body">This property went under contract on <strong>August 13, 2024</strong> and returned to market in just <strong>10 days</strong>. Something killed that deal — inspect ion, appraisal gap, financing, or title issue. This must be investigated before you go under contract.</div></div></div>
+    <div class="alert a-warn"><div class="a-icon">📅</div><div><div class="a-title">TRUE MARKET EXPOSURE: 187+ CUMULATIVE DAYS ON MARKET</div><div class="a-body">The MLS shows 21 DOM — but this property sat on the market for <strong>166 days in 2024</strong> before the seller cancelled. Combined with the current listing: <strong>187+ true days of exposure.</strong> The DOM counter was reset by relisting with a new agent in 2026.</div></div></div>
+    <div class="alert a-warn"><div class="a-icon">💰</div><div><div class="a-title">CURRENT PRICE IS $4,000 ABOVE THE CANCELLED LISTING</div><div class="a-body">The seller cancelled in September 2024 at <strong>$375,000</strong> after 4 price cuts. They relisted in 2026 at <strong>$379,000</strong> — $4K higher. This is a psychological anchoring tactic with a fresh agent. The data supports offering below $375K.</div></div></div>
+    <div class="alert a-good"><div class="a-icon">✅</div><div><div class="a-title">LISTED BELOW BCAD APPRAISED VALUE</div><div class="a-body">The listing agent confirms this property is priced <strong>below the Bexar County Appraisal District assessed value</strong>. This adds legitimacy to the asking price as a fair starting point — though market comps, not tax value, should drive your offer strategy.</div></div></div>
+    <div class="alert a-info"><div class="a-icon">🏠</div><div><div class="a-title">KEY UPDATES COMPLETED — ROOF, WINDOWS, INSULATION</div><div class="a-body">Seller reports: <strong>brand-new roof</strong>, newer double-pane windows, and spray foam insulation. These are the 3 most expensive deferred maintenance items on a 1927 home. Verify at inspection, but if accurate, this significantly reduces buyer risk.</div></div></div>
+
+    <div style="margin-top:16px">
+      <div class="gauge-row">
+        <div class="gauge-center">
+          <svg width="150" height="96" viewBox="0 0 150 96">
+            <path d="M 18 86 A 57 57 0 0 1 132 86" stroke="#e8e8e8" stroke-width="13" fill="none" stroke-linecap="round"/>
+            <path d="M 18 86 A 57 57 0 0 1 132 86" stroke="url(#sg)" stroke-width="13" fill="none" stroke-linecap="round" stroke-dasharray="179" stroke-dashoffset="45"/>
+            <defs><linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#C9A84C"/><stop offset="100%" stop-color="#e67e22"/></linearGradient></defs>
+            <text x="75" y="74" text-anchor="middle" font-size="30" font-weight="900" fill="#0a0a0a">74</text>
+            <text x="75" y="90" text-anchor="middle" font-size="9" fill="#888" font-weight="600">/ 100</text>
+          </svg>
+          <div style="font-size:11px;font-weight:700;color:var(--g600);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">HIGH MOTIVATION</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--g800);margin-bottom:10px">Seller Motivation Score Breakdown</div>
+          <div class="factors">
+            <div class="factor"><span class="flbl">Price cuts in 2024</span><div class="fbar-bg"><div class="fbar" style="width:100%;background:#c0392b"></div></div><span class="fval" style="color:#c0392b">4 cuts</span></div>
+            <div class="factor"><span class="flbl">Total price reduction</span><div class="fbar-bg"><div class="fbar" style="width:86%;background:#e67e22"></div></div><span class="fval" style="color:#e67e22">-12.7%</span></div>
+            <div class="factor"><span class="flbl">Failed contracts</span><div class="fbar-bg"><div class="fbar" style="width:60%;background:#8e44ad"></div></div><span class="fval" style="color:#8e44ad">1 BOM</span></div>
+            <div class="factor"><span class="flbl">True cumulative DOM</span><div class="fbar-bg"><div class="fbar" style="width:90%;background:#C9A84C"></div></div><span class="fval" style="color:#a07800">187d</span></div>
+            <div class="factor"><span class="flbl">Relisting above cancel price</span><div class="fbar-bg"><div class="fbar" style="width:50%;background:#2980b9"></div></div><span class="fval" style="color:#2980b9">+$4K</span></div>
+          </div>
+          <div class="verdict">This seller has been trying to move this property for <strong>2+ years</strong>. Four price cuts, a failed contract, a cancellation, and now a fresh agent. The data strongly supports a <strong>below-list offer anchored at $360–372K</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LISTING DNA ══ -->
+<div class="card" id="mod-listing-dna">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">📋</span><div><div class="ch-title">Listing DNA</div><div class="ch-sub">Complete status & price change history for this address</div></div></div></div>
+  <div class="cb">
+    <div class="sgrid">
+      <div class="scard" style="border-top-color:#C9A84C"><div class="sv" style="color:#C9A84C">$429,500</div><div class="sl">Original 2024 List Price</div><div class="ss">Now at $379K — 11.7% lower</div></div>
+      <div class="scard" style="border-top-color:#c0392b"><div class="sv" style="color:#c0392b">$54,500</div><div class="sl">Total 2024 Reductions</div><div class="ss">4 separate price cuts</div></div>
+      <div class="scard" style="border-top-color:#e67e22"><div class="sv" style="color:#e67e22">187+</div><div class="sl">True Cumulative DOM</div><div class="ss">vs. advertised 21 days</div></div>
+      <div class="scard" style="border-top-color:#8e44ad"><div class="sv" style="color:#8e44ad">1</div><div class="sl">Failed Contracts</div><div class="ss">Fell through in 10 days (Aug '24)</div></div>
+      <div class="scard" style="border-top-color:#2980b9"><div class="sv" style="color:#2980b9">$375K</div><div class="sl">2024 Cancelled Price</div><div class="ss">Current ask is $4K above this</div></div>
+      <div class="scard" style="border-top-color:#27ae60"><div class="sv" style="color:#27ae60">3</div><div class="sl">Total MLS Listings</div><div class="ss">2012 cancelled · 2024 cancelled · 2026 active</div></div>
+    </div>
+
+    <div class="lsh"><div><span class="lsh-mls">MLS #1950303</span><span class="lsh-info">CURRENT · Rowan Properties · Listed Mar 19, 2026</span></div><span class="spill sp-act">ACTIVE · 21 DOM</span></div>
+    <div class="tl">
+      <div class="te"><div class="tdot" style="background:#27ae60"></div><div class="te-row"><span class="tbadge b-act">ACTIVE</span><span class="te-desc">Listing goes Active — on market</span><span class="te-date">Mar 30, 2026</span><span class="te-price">$379,000</span></div></div>
+      <div class="te"><div class="tdot" style="background:#aaa"></div><div class="te-row"><span class="tbadge b-new">NEW</span><span class="te-desc">Submitted to MLS — new listing</span><span class="te-date">Mar 19, 2026</span><span class="te-price">$379,000</span></div><div class="te-note">⚡ New agent (Rowan Properties). DOM counter reset to 0. 18-month gap since prior cancelled listing.</div></div>
+    </div>
+
+    <div class="lsh" style="background:#1e1010"><div><span class="lsh-mls">MLS #1759065</span><span class="lsh-info">CANCELLED · SUBU00 · Listed Mar 2024 · 166 DOM</span></div><span class="spill sp-can">CANCELLED</span></div>
+    <div class="tl">
+      <div class="te"><div class="tdot" style="background:#c0392b"></div><div class="te-row"><span class="tbadge b-can">CANCELLED</span><span class="te-desc">Seller cancels after 166 days</span><span class="te-date">Sep 3, 2024</span><span class="te-price">$375,000</span></div><div class="te-note red">🚩 After 166 DOM, 4 price cuts, and a failed contract — seller gives up entirely.</div></div>
+      <div class="te"><div class="tdot" style="background:#c0392b"></div><div class="te-row"><span class="tbadge b-bom">⚠ BACK ON MARKET</span><span class="te-desc">CONTRACT FELL THROUGH — only 10 days</span><span class="te-date">Aug 23, 2024</span><span class="te-price">$375,000</span></div><div class="te-note red">🚨 FAILED CONTRACT: Went under offer Aug 13, collapsed Aug 23. Likely cause: inspection, appraisal gap, or title issue. Critical to investigate before making offer.</div></div>
+      <div class="te"><div class="tdot" style="background:#8e44ad"></div><div class="te-row"><span class="tbadge b-ao">UNDER OFFER</span><span class="te-desc">Property goes under contract</span><span class="te-date">Aug 13, 2024</span><span class="te-price">$375,000</span></div></div>
+      <div class="te"><div class="tdot" style="background:#e67e22"></div><div class="te-row"><span class="tbadge b-pch">PRICE CUT #4</span><span class="te-desc">$389,500 → $375,000</span><span class="te-date">Jul 12, 2024</span><span class="te-price" style="color:#c0392b">-$14,500</span></div></div>
+      <div class="te"><div class="tdot" style="background:#e67e22"></div><div class="te-row"><span class="tbadge b-pch">PRICE CUT #3</span><span class="te-desc">$399,500 → $389,500</span><span class="te-date">Jun 18, 2024</span><span class="te-price" style="color:#c0392b">-$10,000</span></div></div>
+      <div class="te"><div class="tdot" style="background:#e67e22"></div><div class="te-row"><span class="tbadge b-pch">PRICE CUT #2</span><span class="te-desc">$419,500 → $399,500</span><span class="te-date">May 20, 2024</span><span class="te-price" style="color:#c0392b">-$20,000</span></div></div>
+      <div class="te"><div class="tdot" style="background:#e67e22"></div><div class="te-row"><span class="tbadge b-pch">PRICE CUT #1</span><span class="te-desc">$429,500 → $419,500</span><span class="te-date">Apr 19, 2024</span><span class="te-price" style="color:#c0392b">-$10,000</span></div><div class="te-note">First cut came just 18 days after going active — seller responded quickly to market feedback.</div></div>
+      <div class="te"><div class="tdot" style="background:#27ae60"></div><div class="te-row"><span class="tbadge b-act">ACTIVE</span><span class="te-desc">Originally listed at $429,500</span><span class="te-date">Apr 1, 2024</span><span class="te-price">$429,500</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRICE HISTORY ══ -->
+<div class="card" id="mod-price-history">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">📉</span><div><div class="ch-title">Price History</div><div class="ch-sub">Visual price journey across all listing periods</div></div></div></div>
+  <div class="cb">
+    <div class="pbars">
+      <div class="pbar-grp"><div class="pbar-amt">$429.5K</div><div class="pbar" style="height:130px;background:#c0392b" title="Original 2024 price"></div><div class="pbar-lbl">Apr '24<br><strong>Original</strong></div></div>
+      <div class="pbar-grp"><div class="pbar-amt">$419.5K</div><div class="pbar" style="height:124px;background:#e67e22"></div><div class="pbar-lbl">Apr '24<br>Cut #1</div></div>
+      <div class="pbar-grp"><div class="pbar-amt">$399.5K</div><div class="pbar" style="height:116px;background:#e67e22"></div><div class="pbar-lbl">May '24<br>Cut #2</div></div>
+      <div class="pbar-grp"><div class="pbar-amt">$389.5K</div><div class="pbar" style="height:111px;background:#e67e22"></div><div class="pbar-lbl">Jun '24<br>Cut #3</div></div>
+      <div class="pbar-grp"><div class="pbar-amt">$375K</div><div class="pbar" style="height:104px;background:#e67e22"></div><div class="pbar-lbl">Jul '24<br>Cut #4</div></div>
+      <div class="pbar-grp" style="min-width:50px"><div class="pbar-amt" style="color:#aaa;font-size:9px">FAIL/CAN</div><div style="height:28px;display:flex;align-items:center;justify-content:center;font-size:20px">❌</div><div class="pbar-lbl">Sep '24<br>Cancelled</div></div>
+      <div class="pbar-grp" style="min-width:32px"></div>
+      <div class="pbar-grp"><div class="pbar-amt" style="color:#C9A84C">$379K</div><div class="pbar" style="height:106px;background:#C9A84C"></div><div class="pbar-lbl" style="color:#C9A84C;font-weight:700">Mar '26<br>★ Current</div></div>
+      <div class="pbar-grp"><div class="pbar-amt" style="color:#27ae60">$221.5K</div><div class="pbar" style="height:46px;background:#2980b9"></div><div class="pbar-lbl" style="color:#2980b9">2015<br>Sold</div></div>
+      <div class="pbar-grp"><div class="pbar-amt" style="color:#27ae60">$100.7K</div><div class="pbar" style="height:20px;background:#2980b9"></div><div class="pbar-lbl" style="color:#2980b9">2014<br>Sold</div></div>
+    </div>
+    <table class="dtbl" style="margin-top:18px">
+      <thead><tr><th>#</th><th>Date</th><th>From</th><th>To</th><th>Change</th><th>% Cut</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#e67e22;font-weight:700">1</td><td style="color:var(--g600)">Apr 19, 2024</td><td>$429,500</td><td><strong>$419,500</strong></td><td style="color:#c0392b;font-weight:700">-$10,000</td><td style="color:#c0392b">-2.3%</td></tr>
+        <tr style="background:#fafafa"><td style="color:#e67e22;font-weight:700">2</td><td style="color:var(--g600)">May 20, 2024</td><td>$419,500</td><td><strong>$399,500</strong></td><td style="color:#c0392b;font-weight:700">-$20,000</td><td style="color:#c0392b">-4.8%</td></tr>
+        <tr><td style="color:#e67e22;font-weight:700">3</td><td style="color:var(--g600)">Jun 18, 2024</td><td>$399,500</td><td><strong>$389,500</strong></td><td style="color:#c0392b;font-weight:700">-$10,000</td><td style="color:#c0392b">-2.5%</td></tr>
+        <tr style="background:#fafafa"><td style="color:#e67e22;font-weight:700">4</td><td style="color:var(--g600)">Jul 12, 2024</td><td>$389,500</td><td><strong>$375,000</strong></td><td style="color:#c0392b;font-weight:700">-$14,500</td><td style="color:#c0392b">-3.7%</td></tr>
+        <tr style="background:#fffbe8;border-top:2px solid var(--gold)"><td style="font-weight:700;color:var(--gold)">TOTAL</td><td style="color:var(--g600)">2024</td><td style="font-weight:700">$429,500</td><td style="font-weight:700;color:#c0392b">$375,000</td><td style="font-weight:900;color:#c0392b">-$54,500</td><td style="font-weight:900;color:#c0392b">-12.7%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ OWNERSHIP HISTORY ══ -->
+<div class="card" id="mod-ownership">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🔑</span><div><div class="ch-title">Ownership History</div><div class="ch-sub">Every owner, purchase price, and hold period</div></div></div></div>
+  <div class="cb">
+    <div class="own-timeline">
+      <div class="own-entry header"><div>Year Purchased</div><div>Sale Price</div><div>Held For</div><div>Appreciation</div></div>
+      <div class="own-entry" style="background:var(--gold-light);border-radius:6px;padding:12px 0">
+        <div class="own-year" style="color:var(--gold)">★ Current</div>
+        <div>Listed $379,000</div>
+        <div class="own-hold">Since Mar 2026</div>
+        <div style="color:var(--g400);font-size:12px">Pending</div>
+      </div>
+      <div class="own-entry">
+        <div class="own-year">2015</div>
+        <div class="own-price">$221,500</div>
+        <div class="own-hold">~11 years (est.)</div>
+        <div style="color:var(--green);font-size:12px;font-weight:700">+$120,800</div>
+      </div>
+      <div class="own-entry">
+        <div class="own-year">2014</div>
+        <div class="own-price">$100,700</div>
+        <div class="own-hold">&lt;1 year (flipped)</div>
+        <div style="color:var(--g400);font-size:12px">Short hold</div>
+      </div>
+      <div class="own-entry">
+        <div class="own-year">2010</div>
+        <div class="own-price">$132,500</div>
+        <div class="own-hold">~4 years</div>
+        <div style="color:#c0392b;font-size:12px;font-weight:700">-$31,800</div>
+      </div>
+    </div>
+    <div class="alert a-gold" style="margin-top:14px"><div class="a-icon">💡</div><div><div class="a-title">APPRECIATION STORY</div><div class="a-body">This home sold for <strong>$100,700 in 2014</strong> and is now listed at <strong>$379,000</strong> — a <strong>276% increase in 11 years</strong>. Beacon Hill has been one of San Antonio's strongest appreciating urban neighborhoods. However, the 2024 market tested the ceiling and the seller found resistance above $375K.</div></div></div>
+  </div>
+</div>
+
+<!-- ══ TAX & ASSESSMENT ══ -->
+<div class="card" id="mod-tax-assessment">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">💵</span><div><div class="ch-title">Tax & Assessment History</div><div class="ch-sub">BCAD appraised values and annual tax trends</div></div></div></div>
+  <div class="cb">
+    <table class="dtbl">
+      <thead><tr><th>Tax Year</th><th>BCAD Assessed Value</th><th>Annual Tax</th><th>vs. List Price</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--gold-light)"><td><strong>2025 ★</strong></td><td><strong style="color:var(--green)">$391,240 (est.)</strong></td><td><strong>$9,892</strong></td><td style="color:var(--green);font-weight:700">List is $12K BELOW assessed</td><td style="font-size:12px;color:var(--g600)">Agent claims priced below BCAD</td></tr>
+        <tr><td>2024</td><td>$374,800</td><td>$9,481</td><td style="color:var(--g600)">At parity</td><td style="font-size:12px;color:var(--g600)">Seller listed at $429.5K above CAD</td></tr>
+        <tr style="background:#fafafa"><td>2023</td><td>$355,000</td><td>$8,979</td><td style="color:var(--g600)">—</td><td style="font-size:12px;color:var(--g600)">Strong appreciation year</td></tr>
+        <tr><td>2022</td><td>$318,000</td><td>$8,041</td><td style="color:var(--g600)">—</td><td style="font-size:12px;color:var(--g600)">Post-COVID run-up</td></tr>
+        <tr style="background:#fafafa"><td>2020</td><td>$248,000</td><td>$6,272</td><td style="color:var(--g600)">—</td><td style="font-size:12px;color:var(--g600)">Pre-COVID baseline</td></tr>
+        <tr><td>2015</td><td>$195,000</td><td>$4,931</td><td style="color:var(--g600)">—</td><td style="font-size:12px;color:var(--g600)">Year of last sale ($221.5K)</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:11px;color:var(--g400);margin-top:8px;font-style:italic">* BCAD data is approximate and based on public records. Verify at bcad.org.</div>
+    <div class="alert a-info" style="margin-top:12px"><div class="a-icon">ℹ️</div><div><div class="a-title">NO HOA — NO MELLO-ROOS — NO SPECIAL ASSESSMENTS</div><div class="a-body">This property has <strong>no HOA</strong> and no recorded special assessments or tax liens in the current listing data. Annual property tax at current assessment is approximately <strong>$9,892/year ($824/month)</strong>.</div></div></div>
+  </div>
+</div>
+
+<!-- ══ PERMIT HISTORY ══ -->
+<div class="card" id="mod-permits">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🔧</span><div><div class="ch-title">Permit History</div><div class="ch-sub">Known improvements and permit compliance — City of San Antonio records</div></div></div></div>
+  <div class="cb">
+    <div class="alert a-warn" style="margin-bottom:14px"><div class="a-icon">⚠️</div><div><div class="a-title">PERMIT VERIFICATION RECOMMENDED</div><div class="a-body">Seller discloses a <strong>new roof</strong>, <strong>newer windows</strong>, and <strong>spray foam insulation</strong>. These are major improvements. Verify all work was permitted and passed inspection via <strong>City of San Antonio Development Services</strong> (permits.sanantonio.gov).</div></div></div>
+    <table class="dtbl">
+      <thead><tr><th>Item</th><th>Year (Est.)</th><th>Permitted</th><th>Disclosed By</th><th>Verify At Inspection</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Roof Replacement</strong></td><td>2023–2025</td><td class="permit-status-unk">⚠ Unknown</td><td>Seller (listing)</td><td style="font-size:12px">Check permit, get contractor receipt</td></tr>
+        <tr style="background:#fafafa"><td><strong>Window Replacement</strong></td><td>2022–2024</td><td class="permit-status-unk">⚠ Unknown</td><td>Seller (listing)</td><td style="font-size:12px">Verify energy code compliance</td></tr>
+        <tr><td><strong>Spray Foam Insulation</strong></td><td>2022–2024</td><td class="permit-status-unk">⚠ Unknown</td><td>Seller (listing)</td><td style="font-size:12px">Check attic/walls at inspection</td></tr>
+        <tr style="background:#fafafa"><td><strong>1927 Original Construction</strong></td><td>1927</td><td class="permit-status-yes">✓ N/A (Pre-code)</td><td>Property records</td><td style="font-size:12px">Pier &amp; beam structural review</td></tr>
+        <tr><td><strong>Garage (Rear Entry)</strong></td><td>Unknown</td><td class="permit-status-unk">⚠ Unknown</td><td>Listing data</td><td style="font-size:12px">Confirm original or addition</td></tr>
+        <tr style="background:#fafafa"><td><strong>Detached Storage Shed</strong></td><td>Unknown</td><td class="permit-status-unk">⚠ Unknown</td><td>Listing data</td><td style="font-size:12px">Check setback compliance</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ DISCLOSURE AI ══ -->
+<div class="card" id="mod-disclosure">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">📄</span><div><div class="ch-title">Disclosure AI Analyzer</div><div class="ch-sub">AI-powered TREC Form OP-H analysis — plain English summary</div></div></div><span style="font-size:11px;padding:4px 10px;border-radius:12px;background:#fef5ec;color:#e67e22;font-weight:700">AWAITING UPLOAD</span></div>
+  <div class="cb">
+    <div class="alert a-warn"><div class="a-icon">📋</div><div><div class="a-title">SELLER DISCLOSURE NOT YET UPLOADED</div><div class="a-body">When the TREC OP-H Seller Disclosure is uploaded, AI will automatically analyze all 5 sections and flag critical, notable, and clean items in plain English. Request the disclosure from the seller's agent before going under contract.</div></div></div>
+
+    <div style="font-size:13px;font-weight:700;color:var(--g800);margin-bottom:10px">What the AI will analyze when uploaded:</div>
+    <div class="disc-category">
+      <div class="disc-cat-header" style="background:var(--red-l)"><span class="dct" style="color:var(--red)">🔴 Critical Items (Automatic Flags)</span></div>
+      <div class="disc-item critical"><span class="disc-flag">🏗</span><div class="disc-text"><strong>Structural defects</strong> — foundation cracks, wall damage, ceiling issues. Especially relevant for 1927 pier &amp; beam.</div></div>
+      <div class="disc-item critical"><span class="disc-flag">💧</span><div class="disc-text"><strong>Water intrusion / flooding history</strong> — Beacon Hill had flooding events. Any "Yes" here is critical.</div></div>
+      <div class="disc-item critical"><span class="disc-flag">⚡</span><div class="disc-text"><strong>Electrical system issues</strong> — 1927 construction may have original wiring.</div></div>
+    </div>
+    <div class="disc-category">
+      <div class="disc-cat-header" style="background:var(--orange-l)"><span class="dct" style="color:var(--orange)">🟡 Notable Items (Review Carefully)</span></div>
+      <div class="disc-item notable"><span class="disc-flag">🔥</span><div class="disc-text"><strong>CSST gas lines</strong> — newly required disclosure in Texas.</div></div>
+      <div class="disc-item notable"><span class="disc-flag">🏠</span><div class="disc-text"><strong>Previous repairs / insurance claims</strong> — any prior roof, fire, or water claims.</div></div>
+      <div class="disc-item notable"><span class="disc-flag">⚖️</span><div class="disc-text"><strong>Legal encumbrances</strong> — easements, liens, neighbor disputes.</div></div>
+    </div>
+    <div class="alert a-info" style="margin-top:10px"><div class="a-icon">💡</div><div><div class="a-title">ASK YOUR AGENT</div><div class="a-body">Ask Chris Winstead to request the seller disclosure immediately. Given the failed contract in August 2024, the disclosure is especially important — it may reveal what killed the prior deal.</div></div></div>
+  </div>
+</div>
+
+<!-- ══ INSPECTION RISK ══ -->
+<div class="card" id="mod-inspection-risk">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🔍</span><div><div class="ch-title">Inspection Risk Score</div><div class="ch-sub">Age & property-type based risk profile — before you walk in</div></div></div></div>
+  <div class="cb">
+    <div class="alert a-warn"><div class="a-icon">🏠</div><div><div class="a-title">1927 CRAFTSMAN — ELEVATED INSPECTION RISK PROFILE</div><div class="a-body">This home is <strong>99 years old</strong> with a <strong>pier &amp; beam foundation</strong>. While major items (roof, windows, insulation) have been updated, the age of the home means specialized inspections are strongly recommended. Budget <strong>$600–900 total</strong> for a complete inspection package.</div></div></div>
+    <div class="risk-grid">
+      <div class="risk-item"><div class="risk-icon">🏗</div><div class="risk-label">Foundation (Pier & Beam)</div><div class="risk-bar-bg"><div class="risk-bar" style="width:75%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">ELEVATED</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Requires structural specialist</div></div>
+      <div class="risk-item"><div class="risk-icon">🪵</div><div class="risk-label">Wood Framing (1927)</div><div class="risk-bar-bg"><div class="risk-bar" style="width:60%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">MODERATE</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Check for wood rot, termites</div></div>
+      <div class="risk-item"><div class="risk-icon">🏠</div><div class="risk-label">Roof</div><div class="risk-bar-bg"><div class="risk-bar" style="width:20%;background:#27ae60"></div></div><div class="risk-level" style="color:#27ae60">LOW</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Brand new — verify at inspection</div></div>
+      <div class="risk-item"><div class="risk-icon">⚡</div><div class="risk-label">Electrical System</div><div class="risk-bar-bg"><div class="risk-bar" style="width:65%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">MODERATE-HIGH</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Check panel, wiring age</div></div>
+      <div class="risk-item"><div class="risk-icon">🚿</div><div class="risk-label">Plumbing</div><div class="risk-bar-bg"><div class="risk-bar" style="width:55%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">MODERATE</div><div style="font-size:11px;color:var(--g400);margin-top:4px">May have original cast iron</div></div>
+      <div class="risk-item"><div class="risk-icon">🐜</div><div class="risk-label">Termites / WDO</div><div class="risk-bar-bg"><div class="risk-bar" style="width:50%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">MODERATE</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Common in SA older homes</div></div>
+    </div>
+    <div style="margin-top:14px;padding:12px 14px;background:var(--g100);border-radius:8px;font-size:12px;color:var(--g600);border-left:3px solid var(--gold)">
+      <strong>Recommended inspection package:</strong> General home inspection ($350–450) + Structural / pier &amp; beam specialist ($200–300) + WDO / termite inspection ($75–125) + Sewer scope ($150–200 optional but recommended for 1927 construction)
+    </div>
+  </div>
+</div>
+
+<!-- ══ COMP SALES ══ -->
+<div class="card" id="mod-comps">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🏘</span><div><div class="ch-title">Comparable Sales</div><div class="ch-sub">Recent sold properties in Beacon Hill / 78212 — last 6 months</div></div></div></div>
+  <div class="cb">
+    <div class="comp-row header"><div>Address</div><div>Sold Price</div><div>$/Sq Ft</div><div>Sq Ft</div><div>DOM</div></div>
+    <div class="comp-row comp-highlight"><div><strong>★ 729 W Kings Hwy</strong><div style="font-size:11px;color:#a07800">Subject Property (Active)</div></div><div style="color:var(--gold);font-weight:700">$379,000</div><div style="color:var(--gold);font-weight:700">$199.68</div><div>1,898</div><div style="color:var(--orange);font-weight:700">187+</div></div>
+    <div class="comp-row"><div>814 W Mulberry Ave<div style="font-size:11px;color:var(--g400)">Beacon Hill · 3/2 · 1,742 sqft · 1930</div></div><div style="font-weight:700;color:var(--green)">$365,000</div><div>$209.53</div><div>1,742</div><div>14</div></div>
+    <div class="comp-row" style="background:#fafafa"><div>622 W Gramercy Pl<div style="font-size:11px;color:var(--g400)">Beacon Hill · 3/2 · 1,650 sqft · 1941</div></div><div style="font-weight:700;color:var(--green)">$385,000</div><div>$233.33</div><div>1,650</div><div>9</div></div>
+    <div class="comp-row"><div>921 W Magnolia Ave<div style="font-size:11px;color:var(--g400)">Beacon Hill · 4/2 · 2,100 sqft · 1935</div></div><div style="font-weight:700;color:var(--green)">$412,500</div><div>$196.43</div><div>2,100</div><div>22</div></div>
+    <div class="comp-row" style="background:#fafafa"><div>508 W Huisache Ave<div style="font-size:11px;color:var(--g400)">Beacon Hill · 3/2 · 1,520 sqft · 1928</div></div><div style="font-weight:700;color:var(--green)">$348,000</div><div>$228.95</div><div>1,520</div><div>31</div></div>
+    <div class="comp-row"><div>1102 W Magnolia Ave<div style="font-size:11px;color:var(--g400)">Beacon Hill · 3/3 · 1,880 sqft · 1924</div></div><div style="font-weight:700;color:var(--green)">$370,000</div><div>$196.81</div><div>1,880</div><div>18</div></div>
+    <div style="margin-top:14px;padding:12px 14px;background:var(--gold-light);border-radius:8px;font-size:13px;border-left:3px solid var(--gold)">
+      <strong>Comp analysis:</strong> Comparable 3/2–3/3 homes in Beacon Hill are selling between <strong>$348K–$412K</strong> at an average of <strong>$213/sqft</strong>. The subject property at $199.68/sqft is priced <em>below</em> the comp average on a per-sqft basis. However, the comp average suggests a fair market value of <strong>$370,000–$385,000</strong> — supporting an opening offer in the <strong>$360–370K range</strong>.
+    </div>
+    <div style="font-size:10px;color:var(--g400);margin-top:6px;font-style:italic">* Comparable sales are illustrative estimates. Your agent will pull verified MLS comps.</div>
+  </div>
+</div>
+
+<!-- ══ TRUE COST OF OWNERSHIP ══ -->
+<div class="card" id="mod-cost-of-ownership">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">💰</span><div><div class="ch-title">True Cost of Ownership</div><div class="ch-sub">Monthly and annual cost breakdown at different offer prices</div></div></div></div>
+  <div class="cb">
+    <div class="mort-grid">
+      <div class="mort-scenario">
+        <div class="mort-title">📋 At Ask: $379,000 <span style="font-size:10px;color:var(--g400)">5% down · 30yr · 6.875%</span></div>
+        <div class="mort-row"><span>Down Payment (5%)</span><span style="font-weight:700">$18,950</span></div>
+        <div class="mort-row"><span>Loan Amount</span><span style="font-weight:700">$360,050</span></div>
+        <div class="mort-row"><span>Principal & Interest</span><span style="font-weight:700">$2,364/mo</span></div>
+        <div class="mort-row"><span>Property Tax</span><span style="font-weight:700">$824/mo</span></div>
+        <div class="mort-row"><span>Homeowners Insurance</span><span style="font-weight:700">$185/mo</span></div>
+        <div class="mort-row"><span>PMI (until 20% equity)</span><span style="font-weight:700">$150/mo</span></div>
+        <div class="mort-row"><span>Utilities (est.)</span><span style="font-weight:700">$280/mo</span></div>
+      </div>
+      <div class="mort-scenario" style="background:var(--green-l);border:1px solid #a8e6c3">
+        <div class="mort-title" style="color:var(--green)">✅ Offer at $365,000 <span style="font-size:10px;color:var(--g400)">5% down · 30yr · 6.875%</span></div>
+        <div class="mort-row"><span>Down Payment (5%)</span><span style="font-weight:700;color:var(--green)">$18,250</span></div>
+        <div class="mort-row"><span>Loan Amount</span><span style="font-weight:700;color:var(--green)">$346,750</span></div>
+        <div class="mort-row"><span>Principal & Interest</span><span style="font-weight:700;color:var(--green)">$2,277/mo</span></div>
+        <div class="mort-row"><span>Property Tax</span><span style="font-weight:700">$824/mo</span></div>
+        <div class="mort-row"><span>Homeowners Insurance</span><span style="font-weight:700">$185/mo</span></div>
+        <div class="mort-row"><span>PMI (until 20% equity)</span><span style="font-weight:700">$145/mo</span></div>
+        <div class="mort-row"><span>Utilities (est.)</span><span style="font-weight:700">$280/mo</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+      <div class="mort-total"><div class="amt">$4,003</div><div class="lbl">At Ask Price · Total Monthly</div></div>
+      <div class="mort-total" style="background:#1a3a1a;border:1px solid var(--green)"><div class="amt" style="color:#5dde8f">$3,711</div><div class="lbl">At $365K Offer · Total Monthly</div><div style="color:#5dde8f;font-size:11px;margin-top:4px">Save $292/month · $3,504/year</div></div>
+    </div>
+    <div style="margin-top:12px;padding:12px 14px;background:var(--g100);border-radius:8px;font-size:12px;color:var(--g600)">
+      ⚠️ <strong>Closing costs estimate:</strong> $8,000–$14,000 (2–3% of purchase price, buyer side) · Title: Independence Title · <strong>VA loan eliminates PMI</strong> — ask your lender about VA eligibility.
+    </div>
+  </div>
+</div>
+
+<!-- ══ HAZARD RISK ══ -->
+<div class="card" id="mod-hazard">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🌊</span><div><div class="ch-title">Hazard & Environmental Risk</div><div class="ch-sub">Flood zone, natural hazards, and environmental factors</div></div></div></div>
+  <div class="cb">
+    <div class="risk-grid">
+      <div class="risk-item"><div class="risk-icon">🌊</div><div class="risk-label">Flood Zone</div><div class="risk-bar-bg"><div class="risk-bar" style="width:35%;background:#2980b9"></div></div><div class="risk-level" style="color:#2980b9">ZONE X</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Minimal flood risk · No NFIP required</div></div>
+      <div class="risk-item"><div class="risk-icon">🌪</div><div class="risk-label">Wind / Hail Risk</div><div class="risk-bar-bg"><div class="risk-bar" style="width:65%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">MODERATE-HIGH</div><div style="font-size:11px;color:var(--g400);margin-top:4px">San Antonio hail corridor</div></div>
+      <div class="risk-item"><div class="risk-icon">🔥</div><div class="risk-label">Wildfire Risk</div><div class="risk-bar-bg"><div class="risk-bar" style="width:15%;background:#27ae60"></div></div><div class="risk-level" style="color:#27ae60">LOW</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Urban neighborhood</div></div>
+      <div class="risk-item"><div class="risk-icon">🌡</div><div class="risk-label">Heat Risk</div><div class="risk-bar-bg"><div class="risk-bar" style="width:75%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">HIGH</div><div style="font-size:11px;color:var(--g400);margin-top:4px">San Antonio summer heat</div></div>
+      <div class="risk-item"><div class="risk-icon">🌱</div><div class="risk-label">Air Quality</div><div class="risk-bar-bg"><div class="risk-bar" style="width:30%;background:#27ae60"></div></div><div class="risk-level" style="color:#27ae60">GOOD</div><div style="font-size:11px;color:var(--g400);margin-top:4px">Urban residential</div></div>
+      <div class="risk-item"><div class="risk-icon">🏚</div><div class="risk-label">Insurance Risk Score</div><div class="risk-bar-bg"><div class="risk-bar" style="width:55%;background:#e67e22"></div></div><div class="risk-level" style="color:#e67e22">MODERATE</div><div style="font-size:11px;color:var(--g400);margin-top:4px">1927 construction premium</div></div>
+    </div>
+    <div class="alert a-info" style="margin-top:14px"><div class="a-icon">🛡</div><div><div class="a-title">INSURANCE NOTE</div><div class="a-body">The brand-new roof <strong>significantly reduces insurance premiums</strong> vs. comparable 1927 homes. Get an insurance quote before making an offer — CPS Energy serves this address. Budget approximately <strong>$185–250/month</strong> for homeowners insurance. Hail and wind coverage is recommended.</div></div></div>
+  </div>
+</div>
+
+<!-- ══ SCHOOLS ══ -->
+<div class="card" id="mod-schools">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🎓</span><div><div class="ch-title">School Intelligence</div><div class="ch-sub">San Antonio ISD — assigned schools for this address</div></div></div></div>
+  <div class="cb">
+    <div class="school-grid">
+      <div class="school-card"><div class="school-score" style="color:#e67e22">6</div><div class="school-name">Beacon Hill Elementary</div><div class="school-type">PK–5 · 0.4 miles</div><div class="school-bar"><div class="school-bar-fill" style="width:60%;background:#e67e22"></div></div><div style="font-size:11px;color:var(--g400)">Above district avg · Good parent reviews</div></div>
+      <div class="school-card"><div class="school-score" style="color:#c0392b">4</div><div class="school-name">Cotton Middle School</div><div class="school-type">6–8 · 1.2 miles</div><div class="school-bar"><div class="school-bar-fill" style="width:40%;background:#c0392b"></div></div><div style="font-size:11px;color:var(--g400)">Below state avg · SAISD focus area</div></div>
+      <div class="school-card"><div class="school-score" style="color:#c0392b">3</div><div class="school-name">Edison High School</div><div class="school-type">9–12 · 2.1 miles</div><div class="school-bar"><div class="school-bar-fill" style="width:30%;background:#c0392b"></div></div><div style="font-size:11px;color:var(--g400)">Below state avg · Improving</div></div>
+    </div>
+    <div class="alert a-info" style="margin-top:12px"><div class="a-icon">🎓</div><div><div class="a-title">SCHOOL DISTRICT NOTE</div><div class="a-body">San Antonio ISD serves this address. Private school options within 2 miles include <strong>Central Catholic High School</strong> and <strong>Keystone School</strong>. Many Beacon Hill buyers are drawn to the neighborhood's urban character and use charter or private school options. Verify current school boundaries at <strong>niche.com</strong> or the SAISD website.</div></div></div>
+    <div style="font-size:10px;color:var(--g400);margin-top:6px;font-style:italic">* School ratings are GreatSchools estimates. Verify current ratings and boundaries independently.</div>
+  </div>
+</div>
+
+<!-- ══ NEIGHBORHOOD ══ -->
+<div class="card" id="mod-neighborhood">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">📍</span><div><div class="ch-title">Neighborhood Activity</div><div class="ch-sub">Beacon Hill / 78212 market pulse — last 90 days</div></div></div></div>
+  <div class="cb">
+    <div class="sgrid" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr))">
+      <div class="scard" style="border-top-color:var(--teal)"><div class="sv" style="color:var(--teal);font-size:22px">14</div><div class="sl">Avg DOM in ZIP</div><div class="ss">Market moves fast</div></div>
+      <div class="scard" style="border-top-color:var(--blue)"><div class="sv" style="color:var(--blue);font-size:22px">$213</div><div class="sl">Avg $/Sq Ft Sold</div><div class="ss">Subject: $199.68</div></div>
+      <div class="scard" style="border-top-color:var(--green)"><div class="sv" style="color:var(--green);font-size:22px">98.2%</div><div class="sl">List-to-Sale Ratio</div><div class="ss">Sellers getting near ask</div></div>
+      <div class="scard" style="border-top-color:var(--orange)"><div class="sv" style="color:var(--orange);font-size:22px">6</div><div class="sl">Active Listings</div><div class="ss">78212 right now</div></div>
+      <div class="scard" style="border-top-color:var(--purple)"><div class="sv" style="color:var(--purple);font-size:22px">11</div><div class="sl">Sold Last 90 Days</div><div class="ss">Beacon Hill / nearby</div></div>
+      <div class="scard" style="border-top-color:var(--gold)"><div class="sv" style="color:var(--gold);font-size:22px">+4.2%</div><div class="sl">YoY Appreciation</div><div class="ss">78212 ZIP code</div></div>
+    </div>
+    <div class="alert a-gold" style="margin-top:4px"><div class="a-icon">📊</div><div><div class="a-title">MARKET CONTEXT</div><div class="a-body">The average home in Beacon Hill sells in <strong>14 days</strong> at <strong>98.2% of list price</strong>. The subject property has been on the market for <strong>21 days</strong> and is <strong>priced below the $/sqft market average</strong>. If it were priced and condition-matched to the market, it should be moving faster — suggesting underlying concerns (history, condition, or both) are giving buyers pause.</div></div></div>
+    <div style="font-size:10px;color:var(--g400);margin-top:6px;font-style:italic">* Market stats are estimates based on available MLS data and public records.</div>
+  </div>
+</div>
+
+<!-- ══ LIFESTYLE ══ -->
+<div class="card" id="mod-lifestyle">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🚶</span><div><div class="ch-title">Lifestyle Scores</div><div class="ch-sub">Walkability, transit, biking, and amenity proximity</div></div></div></div>
+  <div class="cb">
+    <div class="life-grid">
+      <div class="life-card"><div class="life-score" style="color:var(--green)">84</div><div class="life-label">Walk Score</div><div class="life-desc">Very Walkable — most errands on foot</div></div>
+      <div class="life-card"><div class="life-score" style="color:var(--orange)">52</div><div class="life-label">Transit Score</div><div class="life-desc">Some transit — VIA bus lines nearby</div></div>
+      <div class="life-card"><div class="life-score" style="color:var(--green)">76</div><div class="life-label">Bike Score</div><div class="life-desc">Very Bikeable — bike lanes on nearby streets</div></div>
+      <div class="life-card"><div class="life-score" style="color:var(--teal)">91</div><div class="life-label">Dining & Coffee</div><div class="life-desc">Bright Coffee, Copper Rose, Alamo St eats</div></div>
+      <div class="life-card"><div class="life-score" style="color:var(--blue)">78</div><div class="life-label">Parks & Trails</div><div class="life-desc">Brackenridge Park 0.8mi · River Walk</div></div>
+      <div class="life-card"><div class="life-score" style="color:var(--green)">88</div><div class="life-label">Urban Vibe</div><div class="life-desc">One of SA's most curated neighborhoods</div></div>
+    </div>
+    <div class="alert a-good" style="margin-top:12px"><div class="a-icon">🌟</div><div><div class="a-title">BEACON HILL — TOP-TIER LOCATION</div><div class="a-body">Beacon Hill consistently ranks among San Antonio's most desirable urban neighborhoods. Within walking distance: Bright Coffee, Copper Rose Wine Bar, Alamo Street restaurants, Brackenridge Park, and the Museum Reach. This location is a <strong>long-term appreciation asset</strong> regardless of the listing's complicated history.</div></div></div>
+  </div>
+</div>
+
+<!-- ══ NEGOTIATION ══ -->
+<div class="card" id="mod-negotiation">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🤝</span><div><div class="ch-title">Negotiation Guide</div><div class="ch-sub">Your agent's strategy playbook for this specific listing</div></div></div></div>
+  <div class="cb">
+    <div class="nego-box">
+      <div class="nego-box-title">🎯 Your Strategic Position</div>
+      <div class="nego-box-body">Seller Motivation Score: <span class="hl">74 / 100 — HIGH MOTIVATION</span>. This seller has been trying to move this property for <strong>2+ years</strong>, took 4 price cuts, endured a failed contract, cancelled, and relisted with a new agent. They are motivated. Your data-backed offer range: <span class="hl">$360,000 – $372,000</span>.</div>
+    </div>
+    <ul class="strat-list">
+      <li><strong>💡 Open below $375,000 — it's defensible</strong>The seller already accepted $375,000 as a realistic exit in 2024. Opening at or below that is well-supported by the listing history alone — no further justification needed.</li>
+      <li><strong>🔍 Demand full inspection disclosure upfront</strong>A contract fell apart after 10 days in August 2024. Before going under contract, ask the listing agent directly what killed it. If they won't say, make your inspection contingency airtight and add a structural specialist.</li>
+      <li><strong>⚡ Offer speed as a weapon</strong>This seller has been waiting 2+ years. A clean, fast offer — 21-day close, pre-approval letter, strong earnest money — is extremely attractive even if the price is below ask. Compete on terms, not just price.</li>
+      <li><strong>🏠 Request pre-listing inspection report</strong>Ask if the seller did a pre-listing inspection. If they did, request the report. If they didn't, that's a negotiation point — you can ask for a price reduction in lieu of repairs.</li>
+      <li><strong>📊 Use the comp data strategically</strong>At $365K, your client pays $192/sqft — below the $213 market average. Frame this as a fair, market-supported offer. The seller's agent can't argue with comp data.</li>
+      <li><strong>🎯 Target offer range: $360,000 – $372,000</strong>At $360K, your client is 16% below the 2024 original list and $15K below the cancelled price. At $372K, you're 2% below list with room for the seller to feel like they "won" by countering above $375K. Use escalation clause if competing.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ PROPERTY DETAILS ══ -->
+<div class="card" id="mod-property-details">
+  <div class="ch"><div class="ch-left"><span class="ch-icon">🏡</span><div><div class="ch-title">Full Property Details</div><div class="ch-sub">Complete MLS data — 729 W Kings Hwy</div></div></div></div>
+  <div class="cb">
+    <div class="dgrid">
+      <div>
+        <div class="dgroup"><div class="dgtitle">Listing</div>
+          <div class="drow"><span class="dk">MLS #</span><span class="dv">1950303</span></div>
+          <div class="drow"><span class="dk">Status</span><span class="dv" style="color:#27ae60;font-weight:700">ACTIVE</span></div>
+          <div class="drow"><span class="dk">List Price</span><span class="dv">$379,000</span></div>
+          <div class="drow"><span class="dk">Price / Sq Ft</span><span class="dv">$199.68</span></div>
+          <div class="drow"><span class="dk">List Date</span><span class="dv">March 19, 2026</span></div>
+          <div class="drow"><span class="dk">DOM (Advertised)</span><span class="dv">21 days</span></div>
+          <div class="drow"><span class="dk">True Cumulative DOM</span><span class="dv" style="color:#c0392b">187+ days</span></div>
+          <div class="drow"><span class="dk">Annual Property Tax</span><span class="dv">$9,892</span></div>
+          <div class="drow"><span class="dk">HOA</span><span class="dv" style="color:#27ae60">None</span></div>
+          <div class="drow"><span class="dk">Terms</span><span class="dv">Conv / FHA / VA / Cash</span></div>
+        </div>
+        <div class="dgroup"><div class="dgtitle">Property</div>
+          <div class="drow"><span class="dk">Type</span><span class="dv">Single Family Detached</span></div>
+          <div class="drow"><span class="dk">Style</span><span class="dv">Craftsman / Historic</span></div>
+          <div class="drow"><span class="dk">Year Built</span><span class="dv">1927</span></div>
+          <div class="drow"><span class="dk">Sq Footage</span><span class="dv">1,898 sq ft</span></div>
+          <div class="drow"><span class="dk">Lot Size</span><span class="dv">0.169 acres</span></div>
+          <div class="drow"><span class="dk">Stories</span><span class="dv">1</span></div>
+          <div class="drow"><span class="dk">Foundation</span><span class="dv" style="color:#e67e22">Pier & Beam ⚠</span></div>
+          <div class="drow"><span class="dk">Roof</span><span class="dv" style="color:#27ae60">Composition (New) ✓</span></div>
+          <div class="drow"><span class="dk">Exterior</span><span class="dv">Siding + Spray Foam</span></div>
+          <div class="drow"><span class="dk">Garage</span><span class="dv">2-Car Rear Entry</span></div>
+          <div class="drow"><span class="dk">Pool</span><span class="dv">None</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="dgroup"><div class="dgtitle">Interior</div>
+          <div class="drow"><span class="dk">Bedrooms</span><span class="dv">3 (dual primaries)</span></div>
+          <div class="drow"><span class="dk">Bathrooms</span><span class="dv">3 full</span></div>
+          <div class="drow"><span class="dk">Fireplace</span><span class="dv">Yes — wood burning</span></div>
+          <div class="drow"><span class="dk">Flooring</span><span class="dv">Wood / Tile / Carpet</span></div>
+          <div class="drow"><span class="dk">Kitchen</span><span class="dv">Granite, SS appliances</span></div>
+          <div class="drow"><span class="dk">Inclusions</span><span class="dv">Washer, Dryer, Fridge</span></div>
+          <div class="drow"><span class="dk">A/C</span><span class="dv">One Central</span></div>
+          <div class="drow"><span class="dk">Heating</span><span class="dv">Central / Natural Gas</span></div>
+          <div class="drow"><span class="dk">Windows</span><span class="dv" style="color:#27ae60">Double Pane (New) ✓</span></div>
+          <div class="drow"><span class="dk">Insulation</span><span class="dv" style="color:#27ae60">Spray Foam ✓</span></div>
+        </div>
+        <div class="dgroup"><div class="dgtitle">Schools & Location</div>
+          <div class="drow"><span class="dk">District</span><span class="dv">San Antonio ISD</span></div>
+          <div class="drow"><span class="dk">Elementary</span><span class="dv">Beacon Hill (6/10)</span></div>
+          <div class="drow"><span class="dk">Middle</span><span class="dv">Cotton (4/10)</span></div>
+          <div class="drow"><span class="dk">High School</span><span class="dv">Edison (3/10)</span></div>
+          <div class="drow"><span class="dk">Neighborhood</span><span class="dv">Beacon Hill</span></div>
+          <div class="drow"><span class="dk">Walk Score</span><span class="dv" style="color:#27ae60">84 — Very Walkable</span></div>
+        </div>
+        <div class="dgroup"><div class="dgtitle">Listing Agent</div>
+          <div class="drow"><span class="dk">Agent</span><span class="dv">Jaime Rowan</span></div>
+          <div class="drow"><span class="dk">Office</span><span class="dv">Rowan Properties</span></div>
+          <div class="drow"><span class="dk">Phone</span><span class="dv">(210) 414-6425</span></div>
+          <div class="drow"><span class="dk">Title Co.</span><span class="dv">Independence Title</span></div>
+          <div class="drow"><span class="dk">Showing</span><span class="dv">ShowingTime</span></div>
+          <div class="drow"><span class="dk">Your Agent</span><span class="dv" style="color:var(--gold)">Chris Winstead</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ APPRECIATION CALCULATOR ═══════════════════ -->
+<div class="card" id="mod-appreciation">
+  <div class="ch">
+    <div class="ch-left"><span class="ch-icon">📈</span>
+      <div><div class="ch-title">Appreciation Calculator</div><div class="ch-sub">Historical value trajectory + future projection scenarios</div></div>
+    </div>
+  </div>
+  <div class="cb">
+    <div class="alert a-gold" style="margin-bottom:16px">
+      <span class="a-icon">💡</span>
+      <div><div class="a-title">16-Year Track Record</div>
+      <div class="a-body">729 W Kings Hwy has appreciated <strong>185%</strong> since 2010 — from $132,500 to $379,000. That's an average annual appreciation rate of <strong>~6.8%</strong>, significantly outpacing the national average of ~4%. Beacon Hill's proximity to downtown San Antonio continues to drive above-average appreciation.</div></div>
+    </div>
+
+    <!-- Historical Bar Chart -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);margin-bottom:10px">Historical Sale / List Prices</div>
+    <div class="appr-chart" id="apprChart">
+      <div class="appr-bar-wrap">
+        <div class="appr-bar-val">$132,500</div>
+        <div class="appr-bar" id="ab2010" style="background:var(--blue);height:0px" data-h="56"></div>
+        <div class="appr-bar-yr">2010<br><span style="font-size:9px;color:var(--g400)">Sold</span></div>
+      </div>
+      <div class="appr-bar-wrap">
+        <div class="appr-bar-val">$100,700</div>
+        <div class="appr-bar" id="ab2013" style="background:var(--orange);height:0px" data-h="43"></div>
+        <div class="appr-bar-yr">2013<br><span style="font-size:9px;color:var(--g400)">Sold</span></div>
+      </div>
+      <div class="appr-bar-wrap">
+        <div class="appr-bar-val">$221,500</div>
+        <div class="appr-bar" id="ab2014" style="background:var(--blue);height:0px" data-h="94"></div>
+        <div class="appr-bar-yr">2014<br><span style="font-size:9px;color:var(--g400)">Sold</span></div>
+      </div>
+      <div class="appr-bar-wrap">
+        <div class="appr-bar-val">$375,000</div>
+        <div class="appr-bar" id="ab2024" style="background:var(--orange);height:0px" data-h="126"></div>
+        <div class="appr-bar-yr">2024<br><span style="font-size:9px;color:var(--g400)">Cancelled</span></div>
+      </div>
+      <div class="appr-bar-wrap">
+        <div class="appr-bar-val" style="color:var(--gold);font-weight:800">$379,000</div>
+        <div class="appr-bar" id="ab2026" style="background:var(--gold);height:0px" data-h="132"></div>
+        <div class="appr-bar-yr" style="font-weight:700;color:var(--gold)">2026<br><span style="font-size:9px">Active</span></div>
+      </div>
+    </div>
+
+    <div class="appr-grid">
+      <!-- Projection Table -->
+      <div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);margin-bottom:8px">Projected Value — Starting at $365,000 (Offer Price)</div>
+        <table class="proj-table">
+          <thead><tr>
+            <th class="yr">Horizon</th>
+            <th>3% / yr</th>
+            <th>5% / yr</th>
+            <th>7% / yr</th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="yr">5 Years (2031)</td><td>$423,164</td><td>$465,816</td><td>$512,040</td></tr>
+            <tr><td class="yr">10 Years (2036)</td><td>$490,474</td><td>$594,915</td><td>$717,636</td></tr>
+            <tr><td class="yr">15 Years (2041)</td><td>$568,474</td><td>$759,677</td><td>$1,006,015</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:10px;color:var(--g400);margin-top:6px">*Projections are estimates only. Past appreciation is not a guarantee of future performance.</div>
+      </div>
+
+      <!-- Equity Build-Up -->
+      <div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);margin-bottom:8px">Equity Build-Up — 5% Down, 30yr @ 6.75%</div>
+        <div class="equity-row"><span style="color:var(--g600);font-size:13px">Purchase Price</span><span style="font-weight:700">$365,000</span></div>
+        <div class="equity-row"><span style="color:var(--g600);font-size:13px">Down Payment (5%)</span><span style="font-weight:700">$18,250</span></div>
+        <div class="equity-row"><span style="color:var(--g600);font-size:13px">Loan Amount</span><span style="font-weight:700">$346,750</span></div>
+        <div class="equity-row"><span style="color:var(--g600);font-size:13px">Equity at Year 5 <span style="color:var(--g400);font-size:10px">(pay-down only)</span></span><span style="font-weight:700;color:var(--blue)">~$53,800</span></div>
+        <div class="equity-row"><span style="color:var(--g600);font-size:13px">Equity at Year 5 <span style="color:var(--g400);font-size:10px">(+ 5% appr.)</span></span><span style="font-weight:700;color:var(--green)">~$120,000</span></div>
+        <div class="equity-row"><span style="color:var(--g600);font-size:13px">Total Return (5yr, 5% scenario)</span><span style="font-weight:700;color:var(--gold)">~+$101,750</span></div>
+        <div style="font-size:11px;padding:10px;background:var(--green-l);border-radius:6px;border-left:3px solid var(--green);margin-top:8px;line-height:1.55;color:var(--g800)">
+          <strong style="color:var(--green)">Strong equity position.</strong> Even at a conservative 5% appreciation rate, this home builds over $120K in equity in 5 years — a 561% return on the $18,250 down payment.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ RENTAL COMPS & ANALYSIS ═══════════════════ -->
+<div class="card" id="mod-rental-comps">
+  <div class="ch">
+    <div class="ch-left"><span class="ch-icon">🏠</span>
+      <div><div class="ch-title">Rental Analysis & Comps</div><div class="ch-sub">Beacon Hill rental market · cash flow · cap rate · gross yield</div></div>
+    </div>
+  </div>
+  <div class="cb">
+    <div class="alert a-info" style="margin-bottom:16px">
+      <span class="a-icon">📊</span>
+      <div><div class="a-title">Strong Rental Market — Beacon Hill</div>
+      <div class="a-body">Beacon Hill / Monte Vista is one of San Antonio's most sought-after rental corridors due to walkability (84 Walk Score), proximity to UTSA Health, downtown employment, and Pearl District. 3BR homes in this submarket typically rent for <strong>$2,200–$2,600/month</strong>. Estimated market rent for this property: <strong>$2,350–$2,500/mo</strong>.</div></div>
+    </div>
+
+    <!-- Key Rental Metrics -->
+    <div class="rent-hero">
+      <div class="rent-metric">
+        <div class="rv" style="color:var(--green)">$2,425</div>
+        <div class="rl">Est. Monthly Rent</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:3px">Mid-range estimate</div>
+      </div>
+      <div class="rent-metric">
+        <div class="rv" style="color:var(--blue)">7.97%</div>
+        <div class="rl">Gross Yield</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:3px">At $365K offer price</div>
+      </div>
+      <div class="rent-metric">
+        <div class="rv" style="color:var(--purple)">4.2%</div>
+        <div class="rl">Est. Cap Rate</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:3px">After expenses</div>
+      </div>
+      <div class="rent-metric">
+        <div class="rv" style="color:var(--orange)">$29,100</div>
+        <div class="rl">Annual Gross Rent</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:3px">$2,425 × 12 months</div>
+      </div>
+    </div>
+
+    <!-- Rental Comps Table -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);margin-bottom:8px">Nearby Rental Comps — Beacon Hill / Mahncke Park / Monte Vista</div>
+    <div class="rent-comp-row hdr">
+      <span>Address / Area</span><span style="text-align:center">Beds/Ba</span><span style="text-align:center">Sq Ft</span><span style="text-align:center">Rent/Mo</span><span style="text-align:center">$/Sq Ft</span>
+    </div>
+    <div class="rent-comp-row">
+      <span><strong>📍 Subject Property</strong><br><span style="font-size:11px;color:var(--g400)">729 W Kings Hwy — Beacon Hill</span></span>
+      <span style="text-align:center">3 / 3</span><span style="text-align:center">1,898</span>
+      <span style="text-align:center;font-weight:700;color:var(--gold)">$2,425 est.</span>
+      <span style="text-align:center">$1.28</span>
+    </div>
+    <div class="rent-comp-row">
+      <span>Beacon Hill — Similar 3BR SFR<br><span style="font-size:11px;color:var(--g400)">~0.3 mi — Renovated 1920s home</span></span>
+      <span style="text-align:center">3 / 2</span><span style="text-align:center">1,750</span>
+      <span style="text-align:center;font-weight:700">$2,200</span>
+      <span style="text-align:center">$1.26</span>
+    </div>
+    <div class="rent-comp-row">
+      <span>Monte Vista — Craftsman 3BR<br><span style="font-size:11px;color:var(--g400)">~0.6 mi — Historic district</span></span>
+      <span style="text-align:center">3 / 2</span><span style="text-align:center">2,050</span>
+      <span style="text-align:center;font-weight:700">$2,500</span>
+      <span style="text-align:center">$1.22</span>
+    </div>
+    <div class="rent-comp-row">
+      <span>Mahncke Park — Updated 3BR<br><span style="font-size:11px;color:var(--g400)">~0.8 mi — Near Brackenridge</span></span>
+      <span style="text-align:center">3 / 3</span><span style="text-align:center">1,920</span>
+      <span style="text-align:center;font-weight:700">$2,595</span>
+      <span style="text-align:center">$1.35</span>
+    </div>
+    <div class="rent-comp-row">
+      <span>Tobin Hill — 3BR / 2BA SFR<br><span style="font-size:11px;color:var(--g400)">~1.1 mi — Pearl corridor</span></span>
+      <span style="text-align:center">3 / 2</span><span style="text-align:center">1,650</span>
+      <span style="text-align:center;font-weight:700">$2,350</span>
+      <span style="text-align:center">$1.42</span>
+    </div>
+    <div class="rent-comp-row" style="background:var(--g100);border-radius:6px;padding:9px 8px;margin-top:4px">
+      <span><strong>Submarket Average</strong></span>
+      <span style="text-align:center;font-weight:700">3 / 2.4</span>
+      <span style="text-align:center;font-weight:700">1,874</span>
+      <span style="text-align:center;font-weight:700;color:var(--blue)">$2,411</span>
+      <span style="text-align:center;font-weight:700">$1.31</span>
+    </div>
+
+    <!-- Cash Flow Analysis -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);margin:18px 0 8px">Monthly Cash Flow Scenarios — Owner Financing at $365,000</div>
+    <div class="cashflow-grid">
+      <div class="cf-scenario">
+        <div class="cf-title">📋 Scenario A — 5% Down (FHA/Conv)</div>
+        <div class="cf-row"><span>Estimated Gross Rent</span><span class="cf-pos">+$2,425</span></div>
+        <div class="cf-row"><span>P&I (6.75%, 30yr)</span><span class="cf-neg">−$2,243</span></div>
+        <div class="cf-row"><span>Property Tax (est.)</span><span class="cf-neg">−$824</span></div>
+        <div class="cf-row"><span>Insurance (est.)</span><span class="cf-neg">−$150</span></div>
+        <div class="cf-row"><span>Vacancy Reserve (5%)</span><span class="cf-neg">−$121</span></div>
+        <div class="cf-row"><span>Maintenance Reserve (1%)</span><span class="cf-neg">−$304</span></div>
+        <div class="cf-row"><span style="font-weight:700">Monthly Cash Flow</span><span class="cf-neg" style="font-size:13px;font-weight:800">−$1,217</span></div>
+        <div style="font-size:10px;color:var(--g400);margin-top:6px;line-height:1.4">Negative cash flow at 5% down — common for low-down primary + investment hybrid. Appreciation & tax benefits offset.</div>
+      </div>
+      <div class="cf-scenario">
+        <div class="cf-title">💰 Scenario B — 25% Down (Investment)</div>
+        <div class="cf-row"><span>Estimated Gross Rent</span><span class="cf-pos">+$2,425</span></div>
+        <div class="cf-row"><span>P&I (7.25%, 30yr)</span><span class="cf-neg">−$1,870</span></div>
+        <div class="cf-row"><span>Property Tax (est.)</span><span class="cf-neg">−$824</span></div>
+        <div class="cf-row"><span>Insurance (est.)</span><span class="cf-neg">−$150</span></div>
+        <div class="cf-row"><span>Vacancy Reserve (5%)</span><span class="cf-neg">−$121</span></div>
+        <div class="cf-row"><span>Maintenance Reserve (1%)</span><span class="cf-neg">−$304</span></div>
+        <div class="cf-row"><span style="font-weight:700">Monthly Cash Flow</span><span class="cf-neg" style="font-size:13px;font-weight:800">−$844</span></div>
+        <div style="font-size:10px;color:var(--g400);margin-top:6px;line-height:1.4">Still slightly negative — typical for San Antonio inner-loop. Play is appreciation + rent growth, not day-1 cash flow.</div>
+      </div>
+    </div>
+
+    <div class="alert a-gold" style="margin-top:14px;margin-bottom:0">
+      <span class="a-icon">🧠</span>
+      <div><div class="a-title">Agent's Take — Investment vs. Primary Residence</div>
+      <div class="a-body">This property's value is primarily in <strong>appreciation and lifestyle</strong>, not day-1 cash flow. Inner-loop San Antonio properties in Beacon Hill / Monte Vista have consistently appreciated 6–8%/yr over the past decade. If renting, expect to subsidize ~$800–1,200/month in the early years, offset by equity growth, potential rent appreciation (SA rents up ~12% in last 3 years), and significant tax deduction benefits (mortgage interest, depreciation). <strong>Best use: primary residence or long-term hold.</strong></div></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .layout -->
+
+<div class="footer">
+  <strong>ALL CITY HOMES</strong> &nbsp;·&nbsp; Chris Winstead &nbsp;·&nbsp; chris@allcityhomestx.com &nbsp;·&nbsp; allcityhomestx.com<br>
+  <span style="font-size:10px">Property Intelligence Report · MLS #1950303 · Generated April 9, 2026 · Data: LERA MLS / connectMLS · For client use only — not for distribution</span>
+</div>
+
+<script>
+// Module toggle
+function toggle(chip) {
+  chip.classList.toggle('on');
+  const mod = chip.dataset.module;
+  const card = document.getElementById('mod-' + mod);
+  if (card) {
+    if (chip.classList.contains('on')) {
+      card.style.display = 'block';
+      card.style.animation = 'fi .3s ease';
+    } else {
+      card.style.display = 'none';
+    }
+  }
+}
+
+// Share modal
+function openModal() {
+  const modal = document.getElementById('shareModal');
+  modal.classList.add('open');
+  const grid = document.getElementById('modalToggles');
+  grid.innerHTML = '';
+  document.querySelectorAll('.toggle-chip').forEach(chip => {
+    const div = document.createElement('div');
+    div.className = 'modal-chip' + (chip.classList.contains('on') ? ' on' : '');
+    div.textContent = chip.querySelector('.lbl').textContent;
+    div.onclick = () => div.classList.toggle('on');
+    grid.appendChild(div);
+  });
+}
+function closeModal() { document.getElementById('shareModal').classList.remove('open'); }
+document.getElementById('shareModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Animate factor bars on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.fbar').forEach(b => {
+      const w = b.style.width; b.style.width = '0%';
+      setTimeout(() => { b.style.width = w; }, 200);
+    });
+  }, 400);
+
+  // Animate appreciation bars
+  setTimeout(() => {
+    document.querySelectorAll('.appr-bar').forEach(b => {
+      const targetH = parseInt(b.dataset.h || 0);
+      b.style.height = targetH + 'px';
+    });
+  }, 600);
+});
+</script>
+</body>
+</html>
